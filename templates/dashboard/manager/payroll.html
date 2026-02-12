@@ -1,0 +1,90 @@
+{% extends 'dashboard/manager.html' %}
+
+{% block content %}
+  <div class="card dashboard-hero fade-up">
+    <div class="hero-header">
+      <div>
+        <h1>{{ page_title }}</h1>
+        <p class="subtle">{{ page_subtitle }}</p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-inline" type="button">Утвердить отчет</button>
+        <button class="btn btn-ghost btn-inline" type="button">Экспорт Excel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card stat-card">
+      <div class="stat-label">Часы по отделу</div>
+      <div class="stat-value">1 240 ч</div>
+      <div class="stat-note">Текущий месяц</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Средняя загрузка</div>
+      <div class="stat-value">91%</div>
+      <div class="stat-note">Норма 40 ч/нед</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Переработка</div>
+      <div class="stat-value">+96 ч</div>
+      <div class="stat-note">Согласовано</div>
+    </div>
+  </div>
+
+  <section class="card section-block">
+    <div class="section-header">
+      <div>
+        <h2>Нагрузка по сотрудникам</h2>
+        <p class="subtle">Оклад фиксирован, здесь только время и загрузка.</p>
+      </div>
+      <div class="section-actions">
+        <button class="btn btn-ghost btn-inline btn-sm" type="button">Сохранить правки</button>
+      </div>
+    </div>
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Сотрудник</th>
+            <th>Оклад</th>
+            <th>Часы</th>
+            <th>Переработка</th>
+            <th>Норма</th>
+            <th>Комментарий</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Елена Кузнецова</td>
+            <td>180 000/мес</td>
+            <td>168</td>
+            <td>+8</td>
+            <td>160</td>
+            <td><input class="control-input control-input-sm" type="text" value="В норме" /></td>
+            <td><span class="status-pill success">Готово</span></td>
+          </tr>
+          <tr>
+            <td>Игорь Лебедев</td>
+            <td>200 000/мес</td>
+            <td>160</td>
+            <td>+4</td>
+            <td>160</td>
+            <td><input class="control-input control-input-sm" type="text" value="Сверх нормы" /></td>
+            <td><span class="status-pill warning">Проверка</span></td>
+          </tr>
+          <tr>
+            <td>Мария Соколова</td>
+            <td>170 000/мес</td>
+            <td>152</td>
+            <td>+0</td>
+            <td>160</td>
+            <td><input class="control-input control-input-sm" type="text" value="Недобор" /></td>
+            <td><span class="status-pill">Черновик</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

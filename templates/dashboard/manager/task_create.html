@@ -1,0 +1,174 @@
+{% extends 'dashboard/manager.html' %}
+
+{% block content %}
+  <div class="manager-task-create" data-task-create-page>
+    <div class="card dashboard-hero fade-up">
+      <div class="hero-header">
+        <div>
+          <h1>{{ page_title }}</h1>
+          <p class="subtle">{{ page_subtitle }}</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-ghost btn-inline" href="{% url 'manager-tasks' %}">Назад к задачам</a>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-chip">Отдел: {{ department_name }}</div>
+        <div class="meta-chip">Неделя: {{ period_label }}</div>
+        <div class="meta-chip">Статус: назначится автоматически</div>
+      </div>
+    </div>
+
+    <div class="task-create-layout">
+      <section class="card section-block task-create-main task-create-full">
+        <div class="section-header">
+          <div>
+            <h2>{{ form_title }}</h2>
+            <p class="subtle">{{ form_subtitle }}</p>
+          </div>
+        </div>
+        <form class="task-form" method="post">
+          {% csrf_token %}
+          <label class="task-title-field">
+            Название
+            <input class="control-input" type="text" name="title" value="{{ initial.title }}" placeholder="Например, сделать авторизацию" />
+          </label>
+          <label class="task-desc-field">
+            Описание
+            <textarea class="control-input" rows="5" name="description" placeholder="Что важно сделать, критерии готовности, ссылка на инструкцию">{{ initial.description }}</textarea>
+          </label>
+
+          <div class="task-create-grid">
+            <label>
+              Тип задачи
+              <div class="custom-select" data-custom-select>
+                <select name="task_type" data-task-type>
+                  <option value="employee" {% if initial.task_type == 'employee' %}selected{% endif %}>Сотруднику</option>
+                  <option value="slot" {% if initial.task_type == 'slot' %}selected{% endif %}>Для слота</option>
+                  <option value="department" {% if initial.task_type == 'department' %}selected{% endif %}>Для отдела</option>
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label></span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label>
+              Сотрудник
+              <div class="custom-select" data-custom-select>
+                <select name="assigned_to" data-task-employee>
+                  <option value="">Выберите сотрудника</option>
+                  {% for employee in employees %}
+                    <option value="{{ employee.id }}" {% if employee.id|stringformat:'s' == initial.employee|stringformat:'s' %}selected{% endif %}>{{ employee.name }}</option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label></span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label>
+              Дата
+              <div class="custom-select" data-custom-select>
+                <select name="date" data-task-date>
+                  {% for day in days %}
+                    <option value="{{ day.date }}" {% if day.date == initial.date %}selected{% endif %}>{{ day.label }}</option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label></span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label>
+              Приоритет
+              <div class="custom-select" data-custom-select>
+                <select name="priority" data-task-priority>
+                  <option value="high" {% if initial.priority == 'high' %}selected{% endif %}>Высокий</option>
+                  <option value="mid" {% if initial.priority == 'mid' %}selected{% endif %}>Средний</option>
+                  <option value="low" {% if initial.priority == 'low' %}selected{% endif %}>Низкий</option>
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label></span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <div class="task-time-row">
+              <label>
+                Начало
+                <div class="custom-select" data-custom-select>
+                  <select name="start_time" data-task-start>
+                    <option value="">—</option>
+                    {% for option in time_options %}
+                      <option value="{{ option }}" {% if option == initial.start_time %}selected{% endif %}>{{ option }}</option>
+                    {% endfor %}
+                  </select>
+                  <button class="custom-select-trigger" type="button" data-select-trigger>
+                    <span data-select-label></span>
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <div class="custom-select-menu" data-select-menu>
+                    <div class="custom-select-options" data-select-options></div>
+                  </div>
+                </div>
+              </label>
+              <label>
+                Конец
+                <div class="custom-select" data-custom-select>
+                  <select name="end_time" data-task-end>
+                    <option value="">—</option>
+                    {% for option in time_options %}
+                      <option value="{{ option }}" {% if option == initial.end_time %}selected{% endif %}>{{ option }}</option>
+                    {% endfor %}
+                  </select>
+                  <button class="custom-select-trigger" type="button" data-select-trigger>
+                    <span data-select-label></span>
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <div class="custom-select-menu" data-select-menu>
+                    <div class="custom-select-options" data-select-options></div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          {% if error_message %}
+            <div class="form-message is-error">{{ error_message }}</div>
+          {% endif %}
+
+          <div class="task-actions">
+            <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+{% endblock %}

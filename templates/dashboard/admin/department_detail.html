@@ -1,0 +1,324 @@
+{% extends 'dashboard/admin.html' %}
+
+{% block content %}
+  <div
+    class="profile-hero card fade-up"
+    data-department-detail
+    data-department-id="{{ department.id }}"
+    data-department-archived="{{ department.is_archived|yesno:'true,false' }}"
+    data-department-update-url="{% url 'api-department-detail' department.id %}"
+    data-employee-update-base="{% url 'api-employee-detail' 0 %}"
+    data-employee-detail-base="{% url 'admin-user-detail' 0 %}"
+  >
+    <div class="profile-topbar">
+      <a class="back-link" href="{% url 'admin-departments' %}" aria-label="Назад к списку отделов">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Назад
+      </a>
+      {% if department.is_archived %}
+        <span class="status-pill warning">В архиве</span>
+      {% else %}
+        <span class="status-pill success">Активен</span>
+      {% endif %}
+    </div>
+    <div class="profile-hero-body">
+      <div class="profile-hero-text">
+        <h1>{{ department.name }}</h1>
+        <p class="subtle">
+          Менеджер: {% if department.manager %}{{ department.manager.get_full_name|default:department.manager.username }}{% else %}не назначен{% endif %}
+        </p>
+        <div class="profile-chips">
+          <span class="info-chip"><span data-employee-count>{{ employees|length }}</span> сотрудников</span>
+          <span class="info-chip" data-positions-count>{{ positions|length }} должностей</span>
+          <span class="info-chip">{% if department.is_archived %}Архивный отдел{% else %}Рабочий отдел{% endif %}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-grid">
+    <section class="card section-block" data-department-info data-inline-edit>
+      <div class="section-header">
+        <div>
+          <h3>О отделе</h3>
+          <p class="subtle">Основные параметры и список должностей.</p>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-dept-info-edit>Редактировать</button>
+          <button class="btn btn-primary btn-inline btn-sm" type="button" data-dept-info-save hidden>Сохранить</button>
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-dept-info-cancel hidden>Отмена</button>
+        </div>
+      </div>
+      {% if department.is_archived %}
+        <div class="form-message is-warning">Архивный отдел. Редактирование параметров отключено.</div>
+      {% endif %}
+      <div class="form-message" data-section-message hidden></div>
+      <div class="info-list">
+        <div class="info-row" data-field-row>
+          <div class="info-label">Название</div>
+          <div class="info-value" data-display-name>{{ department.name }}</div>
+          <input class="info-input" data-field-input name="name" type="text" value="{{ department.name }}" disabled />
+        </div>
+        <div class="info-row" data-field-row>
+          <div class="info-label">Менеджер</div>
+          <div class="info-value" data-display-manager>
+            {% if department.manager %}{{ department.manager.get_full_name|default:department.manager.username }}{% else %}—{% endif %}
+          </div>
+          <div class="custom-select info-input" data-custom-select>
+            <select name="manager_id" data-field-input disabled>
+              <option value="">Без менеджера</option>
+              {% for manager in managers %}
+                <option value="{{ manager.id }}" {% if department.manager_id == manager.id %}selected{% endif %}>
+                  {{ manager.get_full_name|default:manager.username }}
+                </option>
+              {% endfor %}
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>
+                {% if department.manager %}
+                  {{ department.manager.get_full_name|default:department.manager.username }}
+                {% else %}
+                  Без менеджера
+                {% endif %}
+              </span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu>
+              <div class="custom-select-search">
+                <input type="search" placeholder="Найти менеджера" data-select-search />
+              </div>
+              <div class="custom-select-options" data-select-options></div>
+            </div>
+          </div>
+        </div>
+        <div class="info-row" data-field-row>
+          <div class="info-label">Должности</div>
+          <div class="info-value">
+            <div class="pill-set" data-display-positions>
+              {% if positions %}
+                {% for position in positions %}
+                  <span class="pill">{{ position.title }}</span>
+                {% endfor %}
+              {% else %}
+                <span class="pill">Должности не заданы</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="tag-input info-input" data-tag-input>
+            <div class="tag-list" data-tag-list>
+              {% for position in positions %}
+                <span class="tag" data-tag-value="{{ position.title }}">
+                  <span class="tag-label">{{ position.title }}</span>
+                  <button class="tag-remove" type="button" aria-label="Удалить">×</button>
+                </span>
+              {% endfor %}
+            </div>
+            <div class="tag-input-row">
+              <input type="text" placeholder="Новая должность" data-tag-field disabled />
+              <button class="btn btn-ghost btn-inline btn-sm" type="button" data-tag-add disabled>Добавить</button>
+            </div>
+            <input type="hidden" name="positions" data-tag-storage data-field-input value="[]" />
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Статус</div>
+          <div class="info-value">{% if department.is_archived %}В архиве{% else %}Активен{% endif %}</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section-block" data-department-employees>
+      <div class="section-header">
+        <div>
+          <h3>Сотрудники отдела</h3>
+          <p class="subtle">Добавление сотрудников и назначение должностей.</p>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-dept-edit-toggle>Редактировать</button>
+          <button class="btn btn-primary btn-inline btn-sm" type="button" data-dept-edit-done hidden>Готово</button>
+        </div>
+      </div>
+      {% if department.is_archived %}
+        <div class="form-message is-warning">Архивный отдел. Добавление и перевод сотрудников недоступны.</div>
+      {% endif %}
+      <div class="form-message" data-section-message hidden></div>
+      <div class="department-employee-add" data-employee-add hidden>
+        <form class="form" data-employee-add-form novalidate>
+          <div class="form-grid">
+            <label>
+              Сотрудник
+              <div class="custom-select" data-custom-select>
+                <select name="employee_id" {% if not available_employees %}disabled{% endif %} required>
+                  <option value="">{% if available_employees %}Выберите сотрудника{% else %}Нет доступных сотрудников{% endif %}</option>
+                  {% for employee in available_employees %}
+                    <option value="{{ employee.id }}">{{ employee.full_name }} · {{ employee.email }}</option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label>{% if available_employees %}Выберите сотрудника{% else %}Нет доступных сотрудников{% endif %}</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-search">
+                    <input type="search" placeholder="Найти сотрудника" data-select-search />
+                  </div>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label>
+              Должность
+              {% if positions %}
+                <div class="custom-select" data-custom-select>
+                  <select name="position" data-position-select required>
+                    <option value="">Выберите должность</option>
+                    {% for position in positions %}
+                      <option value="{{ position.title }}">{{ position.title }}</option>
+                    {% endfor %}
+                  </select>
+                  <button class="custom-select-trigger" type="button" data-select-trigger>
+                    <span data-select-label>Выберите должность</span>
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <div class="custom-select-menu" data-select-menu>
+                    <div class="custom-select-search">
+                      <input type="search" placeholder="Найти должность" data-select-search />
+                    </div>
+                    <div class="custom-select-options" data-select-options></div>
+                  </div>
+                </div>
+              {% else %}
+                <input type="text" name="position" placeholder="Введите должность" required />
+              {% endif %}
+            </label>
+          </div>
+          <label>
+            Оклад (₽/мес)
+            <input type="number" name="monthly_salary" min="0" step="0.01" placeholder="120000" />
+          </label>
+          <div class="modal-actions">
+            <button class="btn btn-primary" type="submit">Добавить сотрудника</button>
+          </div>
+        </form>
+      </div>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ФИО</th>
+              <th>Email</th>
+              <th>Роль</th>
+              <th>Должность</th>
+              <th>Оклад</th>
+              <th>Статус</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody data-employee-list>
+            {% if employees %}
+              {% for employee in employees %}
+                <tr data-employee-id="{{ employee.id }}" data-employee-name="{{ employee.full_name|default:'' }}" data-employee-email="{{ employee.email|default:'' }}" data-active="{{ employee.is_active|yesno:'true,false' }}"{% if not employee.is_active %} class="is-inactive"{% endif %}>
+                  <td>{{ employee.full_name }}</td>
+                  <td>{{ employee.email|default:"—" }}</td>
+                  <td>{{ employee.role_display|default:"—" }}</td>
+                  <td>{{ employee.position|default:"—" }}</td>
+                  <td>
+                    {% if employee.monthly_salary %}
+                      {{ employee.monthly_salary|floatformat:2 }} ₽/мес
+                    {% else %}
+                      —
+                    {% endif %}
+                  </td>
+                  <td>
+                    <span class="status-dot {{ employee.status_class }}" aria-hidden="true"></span>
+                    <span class="sr-only">{{ employee.status_label }}</span>
+                  </td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="icon-action" type="button" data-employee-transfer aria-label="Перевести сотрудника">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M7 6h10m0 0-3-3m3 3-3 3M17 18H7m0 0 3 3m-3-3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </button>
+                      <a class="icon-action" href="{% url 'admin-user-detail' employee.id %}" aria-label="Карточка сотрудника">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                          <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6" />
+                        </svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr data-empty-row>
+                <td colspan="7" class="subtle">В отделе пока нет сотрудников.</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal" data-modal="transfer-employee" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="transfer-employee-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="transfer-employee-title">Перевод сотрудника</h2>
+          <p class="subtle" data-transfer-employee-name>Выберите новый отдел и укажите причину.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <form class="form" data-transfer-form novalidate>
+        <div class="form-message" data-transfer-message hidden></div>
+        <label>
+          Новый отдел
+          <div class="custom-select" data-custom-select>
+            <select name="department_id" {% if not transfer_departments %}disabled{% endif %} required>
+              <option value="">{% if transfer_departments %}Выберите отдел{% else %}Нет доступных отделов{% endif %}</option>
+              {% for department in transfer_departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+              {% endfor %}
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>{% if transfer_departments %}Выберите отдел{% else %}Нет доступных отделов{% endif %}</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu>
+              <div class="custom-select-search">
+                <input type="search" placeholder="Найти отдел" data-select-search />
+              </div>
+              <div class="custom-select-options" data-select-options></div>
+            </div>
+          </div>
+        </label>
+        <label>
+          Причина перевода
+          <textarea name="department_change_reason" rows="3" placeholder="Например, смена проекта" required></textarea>
+        </label>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" type="button" data-action="close-modal">Отмена</button>
+          <button class="btn btn-primary" type="submit">Перевести</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {{ positions_values|json_script:"department-positions-values" }}
+{% endblock %}

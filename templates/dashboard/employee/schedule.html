@@ -1,0 +1,121 @@
+{% extends 'dashboard/employee.html' %}
+
+{% block content %}
+  <div class="card dashboard-hero fade-up">
+    <div class="hero-header">
+      <div>
+        <h1>{{ page_title }}</h1>
+        <p class="subtle">{{ page_subtitle }}</p>
+      </div>
+      <div class="hero-actions period-bar">
+        <div class="period-switch">
+          <a
+            class="btn btn-inline btn-sm {% if view == 'week' %}btn-primary{% else %}btn-ghost{% endif %}"
+            href="?view=week&offset={{ week_offset }}{% if only_work %}&only_work=1{% endif %}"
+          >
+            Неделя
+          </a>
+          <a
+            class="btn btn-inline btn-sm {% if view == 'month' %}btn-primary{% else %}btn-ghost{% endif %}"
+            href="?view=month&month_offset={{ month_offset }}"
+          >
+            Месяц
+          </a>
+        </div>
+        <div class="period-range">
+          <a class="btn btn-ghost btn-inline btn-sm" href="{{ prev_url }}">Назад</a>
+          <div class="period-dates">{{ period_label }}</div>
+          <a class="btn btn-ghost btn-inline btn-sm" href="{{ next_url }}">Вперед</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if view == 'week' %}
+    <section class="card section-block">
+      <div class="section-header">
+        <div>
+          <h2>Неделя</h2>
+          <p class="subtle">Слоты, статусы и ответственные менеджеры.</p>
+        </div>
+        <div class="section-actions">
+          {% if only_work %}
+            <a class="btn btn-ghost btn-inline btn-sm" href="?view=week&offset={{ week_offset }}">Показать все</a>
+          {% else %}
+            <a class="btn btn-ghost btn-inline btn-sm" href="?view=week&offset={{ week_offset }}&only_work=1">
+              Только рабочие дни
+            </a>
+          {% endif %}
+          <button class="btn btn-ghost btn-inline btn-sm" type="button">Экспорт недели</button>
+        </div>
+      </div>
+      {% if week_rows %}
+        <div class="data-table-wrap">
+          <table class="data-table schedule-table">
+            <thead>
+            <tr>
+              <th>День</th>
+              <th>Время</th>
+              <th>Статус</th>
+              <th>Задачи</th>
+              <th>Детали</th>
+            </tr>
+            </thead>
+            <tbody>
+              {% for row in week_rows %}
+                <tr>
+                  <td>{{ row.day_label }}</td>
+                  <td>{{ row.time_label }}</td>
+                  <td>
+                    <span class="status-pill{% if row.status_tone %} {{ row.status_tone }}{% endif %}">
+                      {{ row.status_label }}
+                  </span>
+                </td>
+                <td>{{ row.tasks_label }}</td>
+                <td>
+                  {% if row.has_slot %}
+                    <button class="btn btn-ghost btn-inline btn-sm" type="button">Открыть</button>
+                    {% else %}
+                      <span class="subtle">—</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <h3>Рабочих слотов нет</h3>
+          <p class="subtle">На выбранной неделе нет запланированных рабочих дней.</p>
+        </div>
+      {% endif %}
+    </section>
+  {% endif %}
+
+  {% if view == 'month' %}
+    <section class="card section-block">
+      <div class="section-header">
+        <div>
+          <h2>Месяц</h2>
+          <p class="subtle">Рабочие дни, отпуска и больничные.</p>
+        </div>
+      </div>
+      <div class="calendar">
+        {% for day_name in weekday_short %}
+          <div class="calendar-weekday">{{ day_name }}</div>
+        {% endfor %}
+        {% for week in month_weeks %}
+          {% for day in week %}
+            <div class="calendar-day{% if day.css_class %} {{ day.css_class }}{% endif %}">
+              <div class="calendar-date">{{ day.date_label }}</div>
+              {% if day.shift_label %}
+                <div class="calendar-shift">{{ day.shift_label }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

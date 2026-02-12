@@ -1,0 +1,326 @@
+{% extends 'dashboard/employee.html' %}
+
+{% block content %}
+  <div
+    class="availability-page"
+    data-employee-availability
+    data-availability-update-url="{% url 'employee-availability-update' %}"
+    data-default-start="{{ default_start }}"
+    data-default-end="{{ default_end }}"
+    data-availability-locked="{% if is_locked %}true{% else %}false{% endif %}"
+    data-shift-request-url="{% url 'employee-shift-request-create' %}"
+  >
+    <div class="card dashboard-hero fade-up">
+      <div class="hero-header">
+        <div>
+          <h1>{{ page_title }}</h1>
+          <p class="subtle">{{ page_subtitle }}</p>
+        </div>
+        <div class="hero-actions period-bar">
+          <div class="period-switch">
+            <a
+              class="btn btn-inline btn-sm {% if week_offset == 0 %}btn-primary{% else %}btn-ghost{% endif %}"
+              href="{% url 'employee-availability' %}"
+            >
+              Текущая неделя
+            </a>
+            <a
+              class="btn btn-inline btn-sm {% if week_offset == 1 %}btn-primary{% else %}btn-ghost{% endif %}"
+              href="{% url 'employee-availability' %}?week=next"
+            >
+              Следующая неделя
+            </a>
+          </div>
+          <div class="period-range">
+            <div class="period-dates">{{ period_label }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="card section-block">
+      <div class="section-header">
+        <div>
+          <h2>Доступность по дням</h2>
+          <p class="subtle">Выберите, когда вы готовы работать и с каким приоритетом.</p>
+          {% if edit_hint %}
+            <p class="subtle availability-hint">{{ edit_hint }}</p>
+          {% endif %}
+        </div>
+        <div class="section-actions availability-summary">
+          <div class="summary-pill">
+            <div class="summary-label">Слотов на неделе</div>
+            <div class="summary-value" data-availability-shifts>{{ summary_shifts }}</div>
+          </div>
+          <div class="summary-pill">
+            <div class="summary-label">Часы</div>
+            <div class="summary-value" data-availability-hours>{{ summary_hours }} ч</div>
+          </div>
+          <div class="summary-pill">
+            <div class="summary-label">Норма</div>
+            <div class="summary-value">{{ weekly_hours_norm }} ч</div>
+          </div>
+        </div>
+      </div>
+      <div class="availability-table">
+        <div class="availability-row availability-head">
+          <div>День</div>
+          <div>Работаю</div>
+          <div>Время</div>
+          <div>Приоритет</div>
+        </div>
+        {% for day in days %}
+          <div
+            class="availability-row{% if not day.is_available %} is-off{% endif %}{% if day.is_today %} is-today{% endif %}"
+            data-availability-row
+            data-date="{{ day.date }}"
+            data-initial-available="{{ day.is_available|yesno:'true,false' }}"
+            data-initial-start="{{ day.start_time }}"
+            data-initial-end="{{ day.end_time }}"
+            data-initial-priority="{{ day.priority }}"
+          >
+            <div class="availability-day">
+              <div class="day-name">{{ day.weekday_label }}</div>
+              <div class="day-date">{{ day.date_label }}</div>
+            </div>
+            <label class="availability-check">
+              <span class="checkbox">
+                <input
+                  type="checkbox"
+                  data-availability-toggle
+                  {% if day.is_available %}checked{% endif %}
+                  {% if is_locked %}disabled{% endif %}
+                />
+                <span class="checkbox-mark"></span>
+              </span>
+              Работаю
+            </label>
+            <div class="availability-time-range">
+              <label class="time-label">
+                От
+                <div class="custom-select availability-time-select" data-custom-select>
+                  <select
+                    data-availability-start
+                    {% if not day.is_available or is_locked %}disabled{% endif %}
+                  >
+                    {% for option in time_options %}
+                      <option value="{{ option }}" {% if option == day.start_time %}selected{% endif %}>
+                        {{ option }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                  <button class="custom-select-trigger" type="button" data-select-trigger>
+                    <span data-select-label>{{ day.start_time }}</span>
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                      <path
+                        d="M5 7l5 6 5-6"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <div class="custom-select-menu" data-select-menu>
+                    <div class="custom-select-options" data-select-options></div>
+                  </div>
+                </div>
+              </label>
+              <label class="time-label">
+                До
+                <div class="custom-select availability-time-select" data-custom-select>
+                  <select
+                    data-availability-end
+                    {% if not day.is_available or is_locked %}disabled{% endif %}
+                  >
+                    {% for option in time_options %}
+                      <option value="{{ option }}" {% if option == day.end_time %}selected{% endif %}>
+                        {{ option }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                  <button class="custom-select-trigger" type="button" data-select-trigger>
+                    <span data-select-label>{{ day.end_time }}</span>
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                      <path
+                        d="M5 7l5 6 5-6"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <div class="custom-select-menu" data-select-menu>
+                    <div class="custom-select-options" data-select-options></div>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <div class="priority-group" role="radiogroup" aria-label="Приоритет">
+              {% for option in priority_options %}
+                <label
+                  class="priority-pill is-{{ option.tone }}{% if day.priority == option.value %} is-active{% endif %}"
+                  data-priority-pill
+                  title="{{ option.label }}"
+                >
+                  <input
+                    type="radio"
+                    name="priority_{{ day.date }}"
+                    value="{{ option.value }}"
+                    data-availability-priority
+                    {% if day.priority == option.value %}checked{% endif %}
+                    {% if not day.is_available or is_locked %}disabled{% endif %}
+                  />
+                  {% if option.value == "high" %}
+                    <svg class="priority-icon" viewBox="0 0 20 20" aria-hidden="true">
+                      <path
+                        d="M10 2.6l2.2 4.5 5 0.7-3.6 3.5 0.9 4.9-4.5-2.4-4.5 2.4 0.9-4.9L2.8 7.8l5-0.7L10 2.6z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  {% elif option.value == "mid" %}
+                    <svg class="priority-icon" viewBox="0 0 20 20" aria-hidden="true">
+                      <circle cx="10" cy="10" r="4.2" fill="currentColor" />
+                    </svg>
+                  {% else %}
+                    <svg class="priority-icon" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                  {% endif %}
+                  <span class="sr-only">{{ option.label }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% if not is_locked %}
+      <div class="inline-panel availability-footer">
+        <button class="btn btn-primary btn-inline" type="button" data-availability-save>Сохранить доступность</button>
+        {% if has_department_manager %}
+          <div class="mini-meta">Менеджер {{ department_manager_label }} увидит обновления в понедельник</div>
+        {% else %}
+          <div class="mini-meta">Менеджер увидит обновления в понедельник</div>
+        {% endif %}
+        <span class="status-pill {% if has_saved %}success{% else %}warning{% endif %}" data-availability-last-saved>
+          Последнее сохранение: {{ last_saved_label }}
+        </span>
+        <div class="form-message" data-availability-message hidden></div>
+      </div>
+    {% else %}
+      <div class="inline-panel availability-footer">
+        {% if has_department_manager %}
+          <div class="mini-meta">График на неделю подтвержден менеджером {{ department_manager_label }}.</div>
+        {% else %}
+          <div class="mini-meta">График на неделю подтвержден менеджером.</div>
+        {% endif %}
+        <span class="status-pill {% if has_saved %}success{% else %}warning{% endif %}" data-availability-last-saved>
+          Последнее сохранение: {{ last_saved_label }}
+        </span>
+      </div>
+    {% endif %}
+
+    {% if show_requests %}
+      <section class="card section-block availability-requests">
+        <div class="section-header">
+          <div>
+            <h2>Запросы по графику</h2>
+            <p class="subtle">Дополнительные часы или замена слота с указанием причины.</p>
+          </div>
+        </div>
+        <div class="request-grid">
+          <form class="request-card" data-request-form data-request-type="extra_hours" novalidate>
+            <div class="request-card-header">
+              <h3>Дополнительные часы</h3>
+              <p class="subtle">Запросить работу сверх утвержденного графика.</p>
+            </div>
+            <div class="form-message" data-request-message hidden></div>
+            <label class="request-field">
+              День
+              <div class="custom-select availability-time-select" data-custom-select>
+                <select data-request-date>
+                  {% for day in days %}
+                    <option value="{{ day.date }}">{{ day.weekday_label }}, {{ day.date_label }}</option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label>{{ days.0.weekday_label }}, {{ days.0.date_label }}</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <div class="request-time-grid">
+              <label class="request-field">
+                От
+                <input
+                  class="request-time-input"
+                  type="time"
+                  step="1800"
+                  value="{{ default_start }}"
+                  data-request-start
+                />
+              </label>
+              <label class="request-field">
+                До
+                <input
+                  class="request-time-input"
+                  type="time"
+                  step="1800"
+                  value="{{ default_end }}"
+                  data-request-end
+                />
+              </label>
+            </div>
+            <label class="request-field">
+              Причина
+              <textarea rows="3" placeholder="Опишите причину" data-request-reason></textarea>
+            </label>
+            <button class="btn btn-primary btn-inline" type="submit">Отправить запрос</button>
+          </form>
+
+          <form class="request-card" data-request-form data-request-type="replacement" novalidate>
+            <div class="request-card-header">
+              <h3>Замена слота</h3>
+              <p class="subtle">Попросить заменить вас в слоте.</p>
+            </div>
+            <div class="form-message" data-request-message hidden></div>
+            <label class="request-field">
+              День
+              <div class="custom-select availability-time-select" data-custom-select>
+                <select data-request-date>
+                  {% for day in days %}
+                    <option value="{{ day.date }}">{{ day.weekday_label }}, {{ day.date_label }}</option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label>{{ days.0.weekday_label }}, {{ days.0.date_label }}</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label class="request-field">
+              Причина
+              <textarea rows="3" placeholder="Опишите причину" data-request-reason></textarea>
+            </label>
+            <button class="btn btn-ghost btn-inline" type="submit">Запросить замену</button>
+          </form>
+        </div>
+      </section>
+    {% endif %}
+  </div>
+{% endblock %}

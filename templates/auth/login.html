@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вход | Conector Shift</title>
+  <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}" />
+  <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+</head>
+<body class="auth-page">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-mark">
+            <img src="{% static 'img/Group.svg' %}" alt="Логотип" />
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Conector Shift</div>
+            <div class="brand-sub">Графики</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <h2>Плавающий график на неделю</h2>
+        <p>Планируйте доступность, управляйте слотами и отслеживайте задачи в реальном времени.</p>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Роли доступа</div>
+        <div class="sidebar-list">
+          <div class="sidebar-item">Портал сотрудника</div>
+          <div class="sidebar-item">Панель менеджера</div>
+          <div class="sidebar-item">Админ-консоль</div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        2026 - Все права защищены.
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar auth-topbar">
+        <button class="theme-toggle" type="button" data-action="toggle-theme" aria-label="Переключить тему">
+          <span class="theme-icon sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation">
+              <circle cx="12" cy="12" r="4.5" fill="currentColor"></circle>
+              <path d="M12 2.2v2.6M12 19.2v2.6M4.2 12h2.6M17.2 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M18.7 5.3l-1.9 1.9M7.2 16.8l-1.9 1.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"></path>
+            </svg>
+          </span>
+          <span class="theme-icon moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation">
+              <path d="M20.2 14.8c-1.4.6-3 .8-4.6.4-3.6-.8-6.1-4-6-7.7.1-1.2.4-2.4 1-3.4-3.7 1-6.4 4.4-6.4 8.4 0 4.8 3.9 8.7 8.7 8.7 3.5 0 6.5-2.1 7.3-5.2z" fill="currentColor"></path>
+            </svg>
+          </span>
+          <span class="sr-only">Переключить тему</span>
+        </button>
+      </header>
+
+      <section class="content">
+        <div class="login-grid" style="grid-template-columns: minmax(0, 520px);">
+          <div class="card login-card fade-up" data-login-page>
+            <h1>С возвращением</h1>
+            <p class="subtle">Используйте корпоративные данные для входа в систему.</p>
+            <form class="form" action="{% url 'login' %}" method="post">
+              {% csrf_token %}
+              {% if error %}
+                <div class="form-error">{{ error }}</div>
+              {% endif %}
+              <label>
+                Логин
+                <input type="text" name="username" placeholder="Ваш логин" autocomplete="username" required />
+              </label>
+              <label class="password-field">
+                Пароль
+                <span class="password-input">
+                  <input type="password" name="password" placeholder="Ваш пароль" autocomplete="current-password" required />
+                  <button class="password-toggle" type="button" data-action="toggle-password" aria-label="Показать пароль" aria-pressed="false">
+                    <svg class="eye-open" viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+                      <path d="M12 5c4.8 0 8.7 3.3 10 7-1.3 3.7-5.2 7-10 7s-8.7-3.3-10-7c1.3-3.7 5.2-7 10-7zm0 2c-3.6 0-6.6 2.2-7.7 5 1.1 2.8 4.1 5 7.7 5s6.6-2.2 7.7-5c-1.1-2.8-4.1-5-7.7-5zm0 2.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="currentColor"></path>
+                    </svg>
+                    <svg class="eye-closed" viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+                      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+                      <path d="M4 4l16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+                    </svg>
+                  </button>
+                </span>
+              </label>
+              <div class="form-row">
+                <label><input type="checkbox" name="remember" /> Запомнить меня</label>
+                <button class="link-button" type="button" data-action="open-reset">Забыли пароль?</button>
+              </div>
+              <button class="btn btn-primary" type="submit">Войти</button>
+            </form>
+            <div class="helper">Доступ к сайту выдаёт администратор.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" data-modal="reset-password" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="reset-password-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="reset-password-title">Восстановление доступа</h2>
+          <p class="subtle">Введите корпоративную почту, чтобы отправить запрос администратору.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <form class="form" data-reset-form data-reset-url="{% url 'api-password-reset-request' %}">
+        <div class="form-message" data-reset-message hidden></div>
+        <label>
+          Корпоративная почта
+          <input type="email" name="email" placeholder="name@company.ru" autocomplete="email" required />
+        </label>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="submit">Отправить запрос</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

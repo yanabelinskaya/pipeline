@@ -1,0 +1,86 @@
+{% extends 'dashboard/employee.html' %}
+
+{% block content %}
+  <div
+    class="employee-task-detail"
+    data-employee-task-detail
+    data-task-id="{{ task.id }}"
+    data-task-submit-url="{% url 'employee-task-submit' task.id %}"
+  >
+    <div class="card dashboard-hero fade-up">
+      <div class="hero-header">
+        <div>
+          <a class="back-link" href="{{ back_url }}">Назад к задачам</a>
+          <h1>{{ task.title }}</h1>
+          <p class="subtle">Срок: {{ task_due_label }}</p>
+        </div>
+        <div class="hero-actions">
+          <span class="status-pill {{ task_status_tone }}" data-task-detail-status-pill>{{ task_status_label }}</span>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-chip">Тип: {{ task_type_label }}</div>
+        <div class="meta-chip">Приоритет: {{ task_priority_label }}</div>
+        {% if task_slot_label and task_slot_label != '—' %}
+          <div class="meta-chip">Слот: {{ task_slot_label }}</div>
+        {% endif %}
+        <div class="meta-chip">Менеджер: {{ manager_label }}</div>
+        <div class="meta-chip">Отдел: {{ department_label }}</div>
+      </div>
+    </div>
+
+    <section class="card section-block">
+      <div class="section-header">
+        <div>
+          <h2>Детали</h2>
+          <p class="subtle">Описание и управление статусом.</p>
+        </div>
+      </div>
+
+      <div class="task-detail-grid">
+        <div class="task-detail-section">
+          <div class="task-detail-label">Описание</div>
+          <p class="task-detail-text">{{ task.description|default:"Описание не добавлено." }}</p>
+        </div>
+        <div class="task-detail-section" data-task-detail-submit-section{% if not can_submit %} hidden{% endif %}>
+          <div class="task-detail-label">Сдать задачу</div>
+          <form class="task-form" data-task-detail-submit enctype="multipart/form-data">
+            <label>
+              <span>Комментарий</span>
+              <textarea name="comment" rows="3" data-task-detail-comment placeholder="Что сделано, что приложено, какие выводы."></textarea>
+            </label>
+            <label class="task-file-field">
+              <span>Файлы</span>
+              <input type="file" name="attachments" multiple data-task-detail-files />
+              <span class="task-file-hint" data-task-detail-files-label>Файл не выбран</span>
+            </label>
+            <div class="task-submit-actions">
+              <button class="btn btn-primary btn-inline btn-sm" type="submit">Отправить отчет</button>
+              <span class="form-message" data-task-detail-message hidden></span>
+            </div>
+          </form>
+        </div>
+        <div class="task-detail-section">
+          <div class="task-detail-label">Комментарии и файлы</div>
+          <ul class="task-submissions-list" data-task-detail-submissions>
+            {% for submission in submissions %}
+              <li>
+                <div class="submission-meta">{{ submission.created_label }} · {{ submission.author }}</div>
+                {% if submission.comment %}
+                  <div class="submission-comment">{{ submission.comment }}</div>
+                {% endif %}
+                {% if submission.file_url %}
+                  <a class="submission-file" href="{{ submission.file_url }}" target="_blank" rel="noopener">
+                    {{ submission.file_name }}
+                  </a>
+                {% endif %}
+              </li>
+            {% empty %}
+              <li class="subtle">Комментариев пока нет.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}

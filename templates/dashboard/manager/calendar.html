@@ -1,0 +1,346 @@
+{% extends 'dashboard/manager.html' %}
+
+{% block content %}
+  <div
+    class="manager-calendar{% if schedule_approved %} is-locked{% endif %}"
+    data-manager-calendar
+    data-approve-url="{% url 'manager-schedule-approve' %}"
+    data-request-update-url="{% url 'manager-shift-request-update' %}"
+    data-week-start="{{ week_start }}"
+    data-week-end="{{ week_end }}"
+    data-schedule-approved="{% if schedule_approved %}true{% else %}false{% endif %}"
+  >
+    <div class="card dashboard-hero fade-up">
+      <div class="hero-header">
+        <div>
+          <h1>{{ page_title }}</h1>
+          <p class="subtle">{{ page_subtitle }}</p>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-inline" type="button" data-schedule-generate>Сформировать слоты</button>
+          <button class="btn btn-ghost btn-inline" type="button" data-schedule-approve>Утвердить график</button>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-chip">Отдел: {{ department_name }}</div>
+        <div class="meta-chip">Неделя: {{ period_label }}</div>
+        <div class="meta-chip">Доступность: {{ availability_count }}</div>
+        <div class="meta-chip">Покрытие: {{ coverage_label }}</div>
+        <div class="meta-chip">Пустые слоты: {{ empty_slots }}</div>
+      </div>
+    </div>
+
+    <section class="card section-block">
+      <div class="section-header">
+        <div>
+          <h2>Параметры генерации</h2>
+          <p class="subtle">Неделя фиксирована, фильтр только по вашему отделу.</p>
+        </div>
+      </div>
+      <div class="manager-controls manager-controls-single">
+        <div class="control-field">
+          <label>Отдел</label>
+          <div class="control-static">{{ department_name }}</div>
+        </div>
+      </div>
+      <div class="inline-panel manager-actions">
+        <div class="pill-set">
+          <button class="pill is-active" type="button" data-toggle-candidates>Скрыть пожелания</button>
+        </div>
+        <span class="status-pill {% if schedule_approved %}success{% else %}warning{% endif %}" data-schedule-status>
+          {% if schedule_approved %}
+            График уже утвержден
+          {% else %}
+            Требуется утверждение
+          {% endif %}
+        </span>
+      </div>
+      <div class="form-message" data-schedule-message hidden></div>
+    </section>
+
+    {% if not has_department %}
+      <section class="card section-block">
+        <div class="empty-state">
+          <h2>Отдел не найден</h2>
+          <p class="subtle">Сначала назначьте менеджера на отдел, чтобы формировать график.</p>
+        </div>
+      </section>
+    {% elif not has_schedule %}
+      <section class="card section-block">
+        <div class="empty-state">
+          <h2>Нет данных для графика</h2>
+          <p class="subtle">Пока нет заявок на доступность или шаблонов слотов.</p>
+        </div>
+      </section>
+    {% else %}
+      <section class="card section-block">
+        <div class="section-header">
+          <div>
+            <h2>Сетка слотов</h2>
+            <p class="subtle">Дни недели, сотрудники и их слоты. Перетаскивайте назначение внутри одинаковых слотов.</p>
+          </div>
+          <div class="period-bar">
+            <div class="period-switch">
+              <a class="btn btn-ghost btn-inline btn-sm" data-week-nav href="{% url 'manager-calendar' %}?week={{ week_prev }}">
+                Прошлая неделя
+              </a>
+              <a
+                class="btn btn-inline btn-sm {% if week_offset == 0 %}btn-primary{% else %}btn-ghost{% endif %}"
+                data-week-nav
+                href="{% url 'manager-calendar' %}?week=current"
+              >
+                Текущая неделя
+              </a>
+              <a class="btn btn-ghost btn-inline btn-sm" data-week-nav href="{% url 'manager-calendar' %}?week={{ week_next }}">
+                Следующая неделя
+              </a>
+            </div>
+            <div class="period-range">
+              <div class="period-dates">{{ period_label }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap manager-schedule">
+          <table class="data-table schedule-matrix schedule-employee-grid">
+            <thead>
+              <tr>
+                <th>Сотрудник</th>
+                {% for day in days %}
+                  <th>{{ day.label }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in employee_rows %}
+                <tr data-employee-row data-user-id="{{ row.id }}" data-employee-name="{{ row.name }}">
+                  <td>
+                    <div class="employee-cell">
+                      <div class="employee-name">{{ row.name }}</div>
+                      <div class="employee-meta">{{ row.hours_label }} ч / {{ weekly_hours_norm }} ч</div>
+                    </div>
+                  </td>
+                  {% for cell in row.cells %}
+                    <td>
+                      <div
+                        class="shift-cell-wrap"
+                        data-cell-wrap
+                        data-user-id="{{ row.id }}"
+                        data-employee-name="{{ row.name }}"
+                        data-date="{{ cell.date }}"
+                      >
+                        {% if cell.is_absent %}
+                          <div class="shift-block shift-cell is-absence is-{{ cell.absence_type }}">
+                            <div class="shift-meta">
+                              <span class="shift-tag is-muted">{{ cell.absence_label }}</span>
+                            </div>
+                            <div class="shift-time">{{ cell.absence_label }}</div>
+                          </div>
+                        {% elif cell.is_available %}
+                          <div
+                            class="shift-block shift-cell{% if cell.is_assigned %} is-assigned{% endif %}{% if cell.is_overtime %} is-overtime{% elif cell.is_undertime %} is-undertime{% endif %}"
+                            draggable="true"
+                            data-shift-cell
+                            data-slot-key="{{ cell.date }}-{{ cell.slot_key }}"
+                            data-user-id="{{ row.id }}"
+                            data-date="{{ cell.date }}"
+                            data-start="{{ cell.start }}"
+                            data-end="{{ cell.end }}"
+                            data-priority="{{ cell.priority }}"
+                            title="{{ row.name }}"
+                          >
+                            <div class="shift-meta">
+                              <span class="priority-flag is-{{ cell.priority }}">{{ cell.priority_label }}</span>
+                              {% if cell.is_assigned %}
+                                <span class="shift-tag">Назначен</span>
+                              {% else %}
+                                <span class="shift-tag is-muted">Не назначен</span>
+                              {% endif %}
+                            </div>
+                            <div class="shift-time">{{ cell.label }}</div>
+                          </div>
+                        {% else %}
+                          <div class="slot-empty">Пусто</div>
+                          {% if shift_templates and not schedule_approved and not cell.is_absent %}
+                            <button class="btn btn-ghost btn-inline btn-xs" type="button" data-manual-add>
+                              Добавить слот
+                            </button>
+                          {% endif %}
+                        {% endif %}
+                      </div>
+                    </td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+              <tr class="no-staff-row">
+                <td>
+                  <div class="employee-cell">
+                    <div class="employee-name">Нет сотрудников</div>
+                    <div class="employee-meta">Слоты без откликов</div>
+                  </div>
+                </td>
+                {% for missing in missing_days %}
+                  <td>
+                    {% if not missing.has_any %}
+                      {% if missing.slots %}
+                      <div class="missing-list">
+                        {% for slot in missing.slots %}
+                          <span class="missing-chip">{{ slot }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %}
+                        <div class="slot-empty">Нет сотрудников</div>
+                      {% endif %}
+                    {% else %}
+                      <div class="slot-empty">—</div>
+                    {% endif %}
+                  </td>
+                {% endfor %}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    {% endif %}
+
+    <section class="card section-block">
+      <div class="section-header">
+        <div>
+          <h2>Запросы сотрудников</h2>
+          <p class="subtle">Доп. часы или замена слота. Решение влияет на график.</p>
+        </div>
+      </div>
+      {% if shift_requests %}
+        <div class="data-table-wrap">
+          <table class="data-table request-table">
+            <thead>
+              <tr>
+                <th>Сотрудник</th>
+                <th>Дата</th>
+                <th>Время</th>
+                <th>Тип</th>
+                <th>Причина</th>
+                <th>Статус</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for request in shift_requests %}
+                <tr data-request-row data-request-id="{{ request.id }}">
+                  <td>{{ request.user_name }}</td>
+                  <td>{{ request.date_label }}</td>
+                  <td>{{ request.time_label }}</td>
+                  <td>{{ request.request_type_label }}</td>
+                  <td>{{ request.reason }}</td>
+                  <td><span class="status-pill {{ request.status_tone }}" data-request-status>{{ request.status_label }}</span></td>
+                  <td>
+                    {% if request.status == "pending" %}
+                      <div class="request-actions">
+                        <button class="btn btn-primary btn-inline btn-sm" type="button" data-request-action data-decision="approved">
+                          Одобрить
+                        </button>
+                        <button class="btn btn-ghost btn-inline btn-sm" type="button" data-request-action data-decision="rejected">
+                          Отклонить
+                        </button>
+                      </div>
+                    {% else %}
+                      <span class="mini-meta">Решение принято</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <h3>Запросов нет</h3>
+          <p class="subtle">Новые запросы появятся здесь.</p>
+        </div>
+      {% endif %}
+    </section>
+
+    <div class="modal" data-modal="manual-shift" aria-hidden="true">
+      <div class="modal-overlay" data-action="close-modal"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="manual-shift-title">
+        <div class="modal-header">
+          <div>
+            <h3 id="manual-shift-title">Ручное добавление слота</h3>
+            <p class="subtle" data-manual-employee>Сотрудник: —</p>
+          </div>
+          <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-grid">
+            <label class="form-field">
+              Дата
+              <div class="control-static" data-manual-date-label>—</div>
+            </label>
+            <label class="form-field">
+              Начало
+              <div class="custom-select availability-time-select" data-custom-select>
+                <select data-manual-start>
+                  <option value="">Выберите время</option>
+                  {% for option in time_options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label>Выберите время</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path
+                      d="M5 7l5 6 5-6"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label class="form-field">
+              Конец
+              <div class="custom-select availability-time-select" data-custom-select>
+                <select data-manual-end>
+                  <option value="">Выберите время</option>
+                  {% for option in time_options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label>Выберите время</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path
+                      d="M5 7l5 6 5-6"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="form-message is-warning" data-manual-warning>
+            Слот будет добавлен вручную, даже если сотрудник не выбирал доступность.
+          </div>
+          <div class="form-message" data-manual-error hidden></div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="button" data-manual-save>Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

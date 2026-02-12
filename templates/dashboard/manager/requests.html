@@ -1,0 +1,119 @@
+{% extends 'dashboard/manager.html' %}
+
+{% block content %}
+  <div class="card dashboard-hero fade-up">
+    <div class="hero-header">
+      <div>
+        <h1>{{ page_title }}</h1>
+        <p class="subtle">{{ page_subtitle }}</p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-inline" type="button">Массовое одобрение</button>
+        <button class="btn btn-ghost btn-inline" type="button">Экспорт</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="tab-bar">
+      <button class="tab-pill active" type="button">Новые</button>
+      <button class="tab-pill" type="button">Ожидают</button>
+      <button class="tab-pill" type="button">Одобренные</button>
+      <button class="tab-pill" type="button">Отклоненные</button>
+    </div>
+    <div class="request-filters">
+      <select class="availability-select">
+        <option selected>Все сотрудники</option>
+        <option>Елена Кузнецова</option>
+        <option>Игорь Лебедев</option>
+      </select>
+      <select class="availability-select">
+        <option selected>Все типы</option>
+        <option>Перенос</option>
+        <option>Отмена</option>
+        <option>Доп. часы</option>
+        <option>Смена времени</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="requests-layout">
+    <section class="card section-block">
+      <div class="section-header">
+        <div>
+          <h2>Список запросов</h2>
+          <p class="subtle">Проверка и согласование заявок.</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-ghost btn-inline btn-sm" type="button">Сбросить фильтры</button>
+        </div>
+      </div>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Сотрудник</th>
+              <th>Слот</th>
+              <th>Запрос</th>
+              <th>Причина</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td>Елена Кузнецова</td>
+              <td>16 апреля, 10:00-19:00</td>
+              <td>Перенос слота</td>
+              <td>Личный визит</td>
+              <td><span class="status-pill warning">Новый</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td>Игорь Лебедев</td>
+              <td>18 апреля, 09:00-18:00</td>
+              <td>Доп. часы</td>
+              <td>Горит задача</td>
+              <td><span class="status-pill">Ожидает</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td>Мария Соколова</td>
+              <td>20 апреля, 12:00-20:00</td>
+              <td>Отмена</td>
+              <td>Больничный</td>
+              <td><span class="status-pill success">Одобрено</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="inline-panel bulk-actions">
+        <div class="mini-meta">Выбрано: 2 запроса</div>
+        <button class="btn btn-primary btn-inline btn-sm" type="button">Массовое одобрение</button>
+        <button class="btn btn-ghost btn-inline btn-sm" type="button">Массовое отклонение</button>
+      </div>
+    </section>
+
+    <aside class="card request-detail">
+      <h2>Детали запроса</h2>
+      <p class="subtle">Запрос на перенос слота от Елены Кузнецовой.</p>
+      <div class="detail-list">
+        <div><strong>Текущий слот:</strong> 16 апреля, 10:00-19:00</div>
+        <div><strong>Запрос:</strong> перенести на 17 апреля</div>
+        <div><strong>Причина:</strong> личный визит</div>
+        <div><strong>Комментарий:</strong> могу выйти вечером</div>
+      </div>
+      <div class="request-actions">
+        <button class="btn btn-primary btn-inline" type="button">Одобрить</button>
+        <button class="btn btn-ghost btn-inline" type="button">Отклонить</button>
+      </div>
+      <div class="task-form">
+        <label>
+          Комментарий менеджера
+          <textarea rows="4" placeholder="Комментарий обязателен при отклонении"></textarea>
+        </label>
+      </div>
+    </aside>
+  </div>
+{% endblock %}

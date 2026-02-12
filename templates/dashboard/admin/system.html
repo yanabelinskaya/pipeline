@@ -1,0 +1,217 @@
+{% extends 'dashboard/admin.html' %}
+
+{% block content %}
+  <div
+    class="card dashboard-hero fade-up"
+    data-admin-system
+    data-backup-create-url="{% url 'admin-system-backup-create' %}"
+    data-monitoring-url="{% url 'admin-system-monitoring' %}"
+  >
+    <div class="hero-header">
+      <div>
+        <h1>Система</h1>
+        <p class="subtle">Журналы событий, бэкапы и состояние сервиса в реальном времени.</p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-inline" type="button" data-action="create-backup">Создать бэкап</button>
+        <a class="btn btn-ghost btn-inline" href="{% url 'admin-system-logs-export' %}">Экспорт логов</a>
+        <button class="btn btn-ghost btn-inline" type="button" data-action="refresh-monitoring">Мониторинг</button>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-chip">
+        Последний бэкап:
+        <span data-last-backup>
+          {% if last_backup %}
+            {{ last_backup.created_at|date:"d.m.Y H:i" }}
+          {% else %}
+            Нет данных
+          {% endif %}
+        </span>
+      </div>
+      <div class="meta-chip">Автобэкап: ежедневно</div>
+      <div class="meta-chip">
+        Мониторинг: <span data-monitoring-updated>{{ monitoring.updated_at|date:"H:i:s" }}</span>
+      </div>
+    </div>
+    <div class="form-message" data-system-message hidden></div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card stat-card">
+      <div class="stat-label">Онлайн</div>
+      <div class="stat-value" data-online-users>{{ monitoring.online_users|default:0 }}</div>
+      <div class="stat-note">Активные пользователи</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">API запросов/мин</div>
+      <div class="stat-value" data-requests-per-minute>{{ monitoring.requests_per_minute|default:0 }}</div>
+      <div class="stat-note">Текущая нагрузка</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Ошибок за 24ч</div>
+      <div class="stat-value" data-errors-24h>{{ monitoring.errors_24h|default:0 }}</div>
+      <div class="stat-note">Сервис и фоновые задачи</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Последний вход</div>
+      <div class="stat-value" data-last-login>
+        {% if monitoring.last_login %}
+          {{ monitoring.last_login|date:"d.m.Y H:i" }}
+        {% else %}
+          Нет данных
+        {% endif %}
+      </div>
+      <div class="stat-note">
+        Пользователь: <span data-last-login-user>{{ monitoring.last_login_user|default:"" }}</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="card section-block">
+    <div class="section-header">
+      <div>
+        <h2>Системные журналы</h2>
+        <p class="subtle">Реальные действия пользователей и события платформы.</p>
+      </div>
+    </div>
+    <div class="data-table-wrap data-table-scroll system-log-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Время</th>
+            <th>Пользователь</th>
+            <th>Действие</th>
+            <th>Путь</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody data-log-rows>
+          {% if system_logs %}
+            {% for log in system_logs %}
+              <tr>
+                <td>{{ log.created_at|date:"H:i" }}</td>
+                <td>{{ log.user_name }}</td>
+                <td>{{ log.action }}</td>
+                <td>
+                  {% if log.method or log.path %}
+                    {{ log.method }} {{ log.path }}
+                  {% else %}
+                    —
+                  {% endif %}
+                </td>
+                <td>
+                  {% if log.level == 'error' or log.level == 'warning' %}
+                    <span class="status-pill warning">{% if log.status_code %}{{ log.status_code }}{% else %}{{ log.level_label }}{% endif %}</span>
+                  {% else %}
+                    <span class="status-pill success">{% if log.status_code %}{{ log.status_code }}{% else %}{{ log.level_label }}{% endif %}</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr data-empty-row>
+              <td colspan="5">Записей пока нет.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card section-block">
+    <div class="section-header">
+      <div>
+        <h2>Бэкапы</h2>
+        <p class="subtle">Скачивание и восстановление последних копий.</p>
+      </div>
+    </div>
+    <div class="data-table-wrap data-table-scroll system-backup-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Файл</th>
+            <th>Создан</th>
+            <th>Размер</th>
+            <th>Источник</th>
+            <th>Статус</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody data-backup-rows>
+          {% if backups %}
+            {% for backup in backups %}
+              <tr data-backup-id="{{ backup.id }}">
+                <td>{{ backup.file_name }}</td>
+                <td>{{ backup.created_at|date:"d.m.Y H:i" }}</td>
+                <td>{{ backup.size_display }}</td>
+                <td>{{ backup.get_source_display }}</td>
+                <td>
+                  <span class="status-pill {% if backup.status == 'failed' %}warning{% else %}success{% endif %}">
+                    {{ backup.get_status_display }}
+                  </span>
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <a
+                      class="icon-action"
+                      href="{% url 'admin-system-backup-download' backup.id %}"
+                      aria-label="Скачать бэкап"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3v10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                        <path d="M8 9l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4 17h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                      </svg>
+                    </a>
+                    <button
+                      class="icon-action"
+                      type="button"
+                      data-action="restore-backup"
+                      data-restore-url="{% url 'admin-system-backup-restore' backup.id %}"
+                      aria-label="Восстановить бэкап"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 11a8 8 0 0 1 13.5-5.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                        <path d="M18 3v5h-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M20 13a8 8 0 0 1-13.5 5.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr data-empty-row>
+              <td colspan="6">Бэкапов пока нет. Нажмите “Создать бэкап”.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="modal" data-modal="restore-backup" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="restore-backup-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="restore-backup-title">Восстановление бэкапа</h2>
+          <p class="subtle">Проверьте имя файла перед восстановлением.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        Вы уверены, что хотите восстановить бэкап <strong data-restore-name></strong>? Текущие данные будут заменены.
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" type="button" data-action="close-modal">Отмена</button>
+        <button class="btn btn-primary" type="button" data-action="confirm-restore">Восстановить</button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

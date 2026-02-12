@@ -1,0 +1,73 @@
+{% extends 'dashboard/manager.html' %}
+
+{% block content %}
+  <div class="card dashboard-hero fade-up">
+    <div class="hero-header">
+      <div>
+        <h1>{{ page_title }}</h1>
+        <p class="subtle">{{ page_subtitle }}</p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-inline" type="button">Новый чат</button>
+        <button class="btn btn-ghost btn-inline" type="button">Архив</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-shell">
+    <aside class="card chat-list">
+      <div class="chat-item active">
+        <div class="chat-title">Елена Кузнецова</div>
+        <div class="chat-preview">Слот подтвержден, спасибо!</div>
+        <div class="chat-time">Сегодня, 09:12</div>
+      </div>
+      <div class="chat-item">
+        <div class="chat-title">Игорь Лебедев</div>
+        <div class="chat-preview">Могу выйти на 2 часа позже</div>
+        <div class="chat-time">Вчера, 18:30</div>
+      </div>
+      <div class="chat-item">
+        <div class="chat-title">Групповой чат слота</div>
+        <div class="chat-preview">@manager график готов</div>
+        <div class="chat-time">Вчера, 16:05</div>
+      </div>
+    </aside>
+
+    <section class="card chat-window">
+      <div class="chat-header">
+        <div>
+          <h2>Елена Кузнецова</h2>
+          <p class="subtle">Слот 15 апреля, 09:00-18:00</p>
+        </div>
+        <div class="pill-set">
+          <button class="pill is-active" type="button">@упоминания</button>
+          <button class="pill" type="button">Файлы</button>
+        </div>
+      </div>
+      <div class="chat-messages">
+        <div class="chat-message">
+          <div class="message-bubble">
+            Доброе утро! Подтверждаю слот и готова принять задачи.
+          </div>
+          <div class="message-meta">Елена, 09:02</div>
+        </div>
+        <div class="chat-message">
+          <div class="message-bubble is-own">
+            Отлично, задачи отправлены. Не забудьте фотоотчет.
+          </div>
+          <div class="message-meta">Вы, 09:05</div>
+        </div>
+        <div class="chat-message">
+          <div class="message-bubble">
+            Принято, спасибо!
+          </div>
+          <div class="message-meta">Елена, 09:12</div>
+        </div>
+      </div>
+      <div class="chat-input">
+        <input class="control-input" type="text" placeholder="Сообщение, @упоминание, файл" />
+        <button class="btn btn-primary btn-inline btn-sm" type="button">Отправить</button>
+      </div>
+    </section>
+  </div>
+{% endblock %}

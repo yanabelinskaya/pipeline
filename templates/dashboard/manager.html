@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Панель отдела | Conector Shift</title>
+  <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}" />
+  <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/manager.css' %}" />
+</head>
+<body class="dashboard-page manager-page sidebar-collapsed">
+  <div class="app-shell">
+    <aside class="sidebar manager-sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-text">
+            <div class="brand-name">Conector Shift</div>
+            <div class="brand-sub">Панель отдела</div>
+          </div>
+        </div>
+        <button class="sidebar-toggle" type="button" data-action="toggle-sidebar" aria-label="Свернуть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Навигация</div>
+        <nav class="sidebar-nav">
+          <a class="sidebar-link{% if active_tab == 'calendar' %} active{% endif %}" href="{% url 'manager-calendar' %}">
+            <span class="nav-icon">K</span>
+            Календарь отдела
+          </a>
+          <a class="sidebar-link{% if active_tab == 'tasks' %} active{% endif %}" href="{% url 'manager-tasks' %}">
+            <span class="nav-icon">T</span>
+            Задачи отдела
+          </a>
+          <a class="sidebar-link{% if active_tab == 'payroll' %} active{% endif %}" href="{% url 'manager-payroll' %}">
+            <span class="nav-icon">Z</span>
+            Отчеты и нагрузка
+          </a>
+          <a class="sidebar-link{% if active_tab == 'employees' %} active{% endif %}" href="{% url 'manager-employees' %}">
+            <span class="nav-icon">S</span>
+            Сотрудники отдела
+          </a>
+          <a class="sidebar-link{% if active_tab == 'chat' %} active{% endif %}" href="{% url 'manager-chat' %}">
+            <span class="nav-icon">C</span>
+            Чат с сотрудниками
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Быстрые действия</div>
+        <div class="quick-actions">
+          <button class="btn btn-ghost btn-inline" type="button">Сформировать слоты</button>
+          <a class="btn btn-ghost btn-inline" href="{% url 'manager-task-create' %}">Создать задачу</a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        ООО "Конектор" / Менеджер
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="left-controls">
+          <button class="icon-button sidebar-toggle-main" type="button" data-action="toggle-sidebar" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+        <div class="right-controls">
+          <button class="theme-toggle" type="button" data-action="toggle-theme" aria-label="Переключить тему">
+            <span class="theme-icon sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <circle cx="12" cy="12" r="4.5" fill="currentColor"></circle>
+                <path d="M12 2.2v2.6M12 19.2v2.6M4.2 12h2.6M17.2 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M18.7 5.3l-1.9 1.9M7.2 16.8l-1.9 1.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"></path>
+              </svg>
+            </span>
+            <span class="theme-icon moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M20.2 14.8c-1.4.6-3 .8-4.6.4-3.6-.8-6.1-4-6-7.7.1-1.2.4-2.4 1-3.4-3.7 1-6.4 4.4-6.4 8.4 0 4.8 3.9 8.7 8.7 8.7 3.5 0 6.5-2.1 7.3-5.2z" fill="currentColor"></path>
+              </svg>
+            </span>
+            <span class="sr-only">Переключить тему</span>
+          </button>
+          <a class="profile-button" href="{% url 'profile' %}" aria-label="Профиль">
+            <svg viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" fill="currentColor"></circle>
+              <path d="M4 20c1.6-3.8 5-6 8-6s6.4 2.2 8 6" fill="currentColor"></path>
+            </svg>
+            <span class="sr-only">Профиль</span>
+          </a>
+          <a class="logout-button" href="{% url 'logout' %}" aria-label="Выйти из аккаунта">
+            <svg viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+              <path d="M10 3h5a2 2 0 0 1 2 2v4h-2V5h-5v14h5v-4h2v4a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" fill="currentColor"></path>
+              <path d="M12 12l-4-4v3H4v2h4v3l4-4z" fill="currentColor"></path>
+            </svg>
+            <span class="sr-only">Выйти из аккаунта</span>
+          </a>
+        </div>
+      </header>
+
+      <section class="content">
+        {% block content %}{% endblock %}
+      </section>
+    </main>
+  </div>
+
+  <script src="{% static 'js/app.js' %}"></script>
+  <script src="{% static 'js/manager.js' %}"></script>
+</body>
+</html>

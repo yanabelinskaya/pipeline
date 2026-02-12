@@ -1,0 +1,50 @@
+{% extends 'dashboard/employee.html' %}
+
+{% block content %}
+  <div class="card dashboard-hero fade-up">
+    <div class="hero-header">
+      <div>
+        <h1>{{ page_title }}</h1>
+        <p class="subtle">{{ page_subtitle }}</p>
+      </div>
+      <div class="hero-actions period-bar">
+        <div class="period-switch">
+          <button class="btn btn-primary btn-inline btn-sm" type="button">Новые</button>
+          <button class="btn btn-ghost btn-inline btn-sm" type="button">Все</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="card section-block">
+    <div class="section-header">
+      <div>
+        <h2>Уведомления</h2>
+        <p class="subtle">Все важные события по слотам и задачам.</p>
+      </div>
+    </div>
+    <div class="notification-list">
+      <div class="notification-item">
+        <div class="notification-meta">
+          <div class="notification-title">Слот на пятницу подтвержден</div>
+          <div class="notification-time">Сегодня, 09:14</div>
+        </div>
+        <span class="status-pill success">График</span>
+      </div>
+      <div class="notification-item">
+        <div class="notification-meta">
+          <div class="notification-title">Добавлена задача “Инвентаризация склада”</div>
+          <div class="notification-time">Вчера, 18:20</div>
+        </div>
+        <span class="status-pill warning">Задачи</span>
+      </div>
+      <div class="notification-item">
+        <div class="notification-meta">
+          <div class="notification-title">Отчет по времени готов</div>
+          <div class="notification-time">02 фев, 12:05</div>
+        </div>
+        <span class="status-pill">Отчеты</span>
+      </div>
+    </div>
+  </section>
+{% endblock %}

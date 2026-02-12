@@ -1,0 +1,279 @@
+{% extends base_template %}
+
+{% block content %}
+  <div
+    class="profile-hero card fade-up"
+    data-employee-detail
+    data-employee-active="{{ employee.is_active|yesno:'true,false' }}"
+    data-employee-update-url="{% url 'api-employee-detail' employee.id %}"
+    data-avatar-url="{% url 'api-employee-avatar' employee.id %}"
+    data-employee-role="{{ employee.role }}"
+  >
+    <div class="profile-topbar">
+      <a class="back-link" href="{% url back_url %}" aria-label="Назад">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Назад
+      </a>
+      <span class="status-dot {{ employee.status_class }}" aria-hidden="true" data-status-dot></span>
+    </div>
+    <div class="profile-hero-body">
+      <div class="avatar-block">
+        <div class="avatar-stack">
+          {% if employee.avatar_url %}
+            <img class="avatar-image" data-avatar-image alt="Фото сотрудника" src="{{ employee.avatar_url }}" />
+            <div class="avatar-circle" data-avatar-fallback hidden>
+              {{ employee.full_name|default:"?"|slice:":1" }}
+            </div>
+          {% else %}
+            <div class="avatar-circle" data-avatar-fallback>
+              {{ employee.full_name|default:"?"|slice:":1" }}
+            </div>
+            <img class="avatar-image" data-avatar-image alt="Фото сотрудника" hidden />
+          {% endif %}
+        </div>
+        <label class="avatar-upload" aria-label="Изменить фото">
+          <input type="file" accept="image/*" data-avatar-input />
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h3l1.5-2h7L17 7h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="12" cy="13" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6" />
+          </svg>
+          <span class="sr-only">Изменить фото</span>
+        </label>
+      </div>
+      <div class="profile-hero-text">
+        <h1>{{ employee.full_name }}</h1>
+        <p class="subtle">{{ employee.role_display|default:"—" }} · {{ employee.department|default:"—" }}</p>
+        <div class="profile-chips">
+          <span class="info-chip">{{ employee.email|default:"—" }}</span>
+          <span class="info-chip">{{ employee.corporate_phone|default:"—" }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-grid">
+    <section class="card section-block" data-inline-edit>
+      <div class="section-header">
+        <div>
+          <h3>Работа</h3>
+          <p class="subtle">Отдел, должность, оклад.</p>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-edit-toggle>Редактировать</button>
+          <button class="btn btn-primary btn-inline btn-sm" type="button" data-edit-save hidden>Сохранить</button>
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-edit-cancel hidden>Отмена</button>
+        </div>
+      </div>
+      <div class="form-message" data-section-message hidden></div>
+      <div class="info-list">
+        <div class="info-row" data-field-row data-format="department">
+          <div class="info-label">Отдел</div>
+          <div class="info-value" data-field-value>{{ employee.department|default:"—" }}</div>
+          <div class="custom-select info-input" data-custom-select>
+            <select name="department_id" data-department-select data-field-input disabled>
+              <option value="">Выберите отдел</option>
+              {% for department in departments %}
+                <option value="{{ department.id }}" data-name="{{ department.name }}" {% if department.id == employee.department_id %}selected{% endif %}>
+                  {{ department.name }}
+                </option>
+              {% endfor %}
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>Выберите отдел</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu></div>
+          </div>
+        </div>
+        {% if employee.role != 'manager' %}
+          <div class="info-row" data-field-row data-format="position">
+            <div class="info-label">Должность</div>
+            <div class="info-value" data-field-value>{{ employee.position|default:"—" }}</div>
+            <div class="custom-select info-input" data-custom-select>
+              <select name="position" data-position-select data-field-input data-current="{{ employee.position|default_if_none:'' }}" disabled>
+                <option value="">Выберите должность</option>
+              </select>
+              <button class="custom-select-trigger" type="button" data-select-trigger>
+                <span data-select-label>Выберите должность</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="custom-select-menu" data-select-menu></div>
+            </div>
+          </div>
+        {% endif %}
+        <div class="info-row" data-field-row data-format="rate" data-validate="rate">
+          <div class="info-label">Оклад (₽/мес)</div>
+          <div class="info-value" data-field-value>
+            {% if employee.monthly_salary %}
+              {{ employee.monthly_salary|floatformat:2 }} ₽/мес
+            {% else %}
+              —
+            {% endif %}
+          </div>
+          <input class="info-input" data-field-input name="monthly_salary" type="number" value="{{ employee.monthly_salary|default_if_none:'' }}" />
+        </div>
+        <div class="info-row" data-field-row data-rate-reason-row>
+          <div class="info-label">Причина повышения оклада</div>
+          <div class="info-value" data-field-value>{{ employee.salary_reason|default:"—" }}</div>
+          <input class="info-input" data-field-input name="salary_reason" type="text" value="{{ employee.salary_reason|default_if_none:'' }}" placeholder="Причина повышения оклада" />
+        </div>
+        <div class="info-row" data-field-row data-format="status">
+          <div class="info-label">Статус</div>
+          <div class="info-value" data-field-value>{{ employee.status_label }}</div>
+          <div class="custom-select info-input" data-custom-select>
+            <select name="is_active" data-field-input disabled>
+              <option value="active" {% if employee.is_active %}selected{% endif %}>Активен</option>
+              <option value="inactive" {% if not employee.is_active %}selected{% endif %}>Неактивен</option>
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>Статус</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section-block" data-inline-edit>
+      <div class="section-header">
+        <div>
+          <h3>Контакты</h3>
+          <p class="subtle">Телефон и каналы связи.</p>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-edit-toggle>Редактировать</button>
+          <button class="btn btn-primary btn-inline btn-sm" type="button" data-edit-save hidden>Сохранить</button>
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-edit-cancel hidden>Отмена</button>
+        </div>
+      </div>
+      <div class="form-message" data-section-message hidden></div>
+      <div class="info-list">
+        <div class="info-row" data-field-row data-validate="email">
+          <div class="info-label">Email</div>
+          <div class="info-value" data-field-value>{{ employee.email|default:"—" }}</div>
+          <input class="info-input" data-field-input name="email" type="email" value="{{ employee.email|default_if_none:'' }}" />
+        </div>
+        <div class="info-row" data-field-row data-validate="phone">
+          <div class="info-label">Корпоративный телефон</div>
+          <div class="info-value" data-field-value>{{ employee.corporate_phone|default:"—" }}</div>
+          <input class="info-input" data-field-input name="corporate_phone" type="text" inputmode="tel" value="{{ employee.corporate_phone|default_if_none:'' }}" />
+        </div>
+        <div class="info-row" data-field-row data-validate="phone">
+          <div class="info-label">Личный телефон</div>
+          <div class="info-value" data-field-value>{{ employee.personal_phone|default:"—" }}</div>
+          <input class="info-input" data-field-input name="personal_phone" type="text" inputmode="tel" value="{{ employee.personal_phone|default_if_none:'' }}" placeholder="—" />
+        </div>
+        <div class="info-row" data-field-row>
+          <div class="info-label">Адрес</div>
+          <div class="info-value" data-field-value>{{ employee.address|default:"—" }}</div>
+          <input class="info-input" data-field-input name="address" type="text" value="{{ employee.address|default_if_none:'' }}" placeholder="—" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card section-block" data-inline-edit>
+      <div class="section-header">
+        <div>
+          <h3>Паспорт</h3>
+          <p class="subtle">Документ сотрудника.</p>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-edit-toggle>Редактировать</button>
+          <button class="btn btn-primary btn-inline btn-sm" type="button" data-edit-save hidden>Сохранить</button>
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-edit-cancel hidden>Отмена</button>
+        </div>
+      </div>
+      <div class="form-message" data-section-message hidden></div>
+      <div class="info-list">
+        <div class="info-row" data-field-row data-validate="passport-series">
+          <div class="info-label">Серия</div>
+          <div class="info-value" data-field-value>{{ employee.passport_series|default:"—" }}</div>
+          <input class="info-input" data-field-input name="passport_series" type="text" inputmode="numeric" maxlength="4" value="{{ employee.passport_series|default_if_none:'' }}" placeholder="—" />
+        </div>
+        <div class="info-row" data-field-row data-validate="passport-number">
+          <div class="info-label">Номер</div>
+          <div class="info-value" data-field-value>{{ employee.passport_number|default:"—" }}</div>
+          <input class="info-input" data-field-input name="passport_number" type="text" inputmode="numeric" maxlength="6" value="{{ employee.passport_number|default_if_none:'' }}" placeholder="—" />
+        </div>
+        <div class="info-row" data-field-row>
+          <div class="info-label">Кем выдан</div>
+          <div class="info-value" data-field-value>{{ employee.passport_issued_by|default:"—" }}</div>
+          <input class="info-input" data-field-input name="passport_issued_by" type="text" value="{{ employee.passport_issued_by|default_if_none:'' }}" placeholder="—" />
+        </div>
+        <div class="info-row" data-field-row data-format="date">
+          <div class="info-label">Дата выдачи</div>
+          <div class="info-value" data-field-value>{{ employee.passport_issue_date|default:"—" }}</div>
+          <div class="custom-date info-input" data-date-picker>
+            <input class="date-input" data-field-input data-date-input name="passport_issue_date" type="text" value="{{ employee.passport_issue_date|default_if_none:'' }}" placeholder="ДД.ММ.ГГГГ" />
+            <button class="date-trigger" type="button" data-date-trigger aria-label="Открыть календарь">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16v13H4zM7 3v4M17 3v4M4 11h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="date-panel" data-date-panel hidden></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section-block" data-inline-edit>
+      <div class="section-header">
+        <div>
+          <h3>СНИЛС и ИНН</h3>
+          <p class="subtle">Налоговые идентификаторы.</p>
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-edit-toggle>Редактировать</button>
+          <button class="btn btn-primary btn-inline btn-sm" type="button" data-edit-save hidden>Сохранить</button>
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-edit-cancel hidden>Отмена</button>
+        </div>
+      </div>
+      <div class="form-message" data-section-message hidden></div>
+      <div class="info-list">
+        <div class="info-row" data-field-row data-validate="snils">
+          <div class="info-label">СНИЛС</div>
+          <div class="info-value" data-field-value>{{ employee.snils|default:"—" }}</div>
+          <input class="info-input" data-field-input name="snils" type="text" inputmode="numeric" maxlength="14" value="{{ employee.snils|default_if_none:'' }}" placeholder="000-000-000 00" />
+        </div>
+        <div class="info-row" data-field-row data-validate="inn">
+          <div class="info-label">ИНН</div>
+          <div class="info-value" data-field-value>{{ employee.inn|default:"—" }}</div>
+          <input class="info-input" data-field-input name="inn" type="text" inputmode="numeric" maxlength="12" value="{{ employee.inn|default_if_none:'' }}" placeholder="000000000000" />
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal" data-modal="unsaved-changes" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="unsaved-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="unsaved-title">Несохраненные изменения</h2>
+          <p class="subtle">Изменения не будут сохранены.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body subtle">Если вы уйдете, изменения не сохранятся. Продолжить?</div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" type="button" data-action="close-modal">Остаться</button>
+        <button class="btn btn-danger" type="button" data-unsaved-confirm>Уйти без сохранения</button>
+      </div>
+    </div>
+  </div>
+
+  {{ department_positions|json_script:"department-positions-data" }}
+{% endblock %}

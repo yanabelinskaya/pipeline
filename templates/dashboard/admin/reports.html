@@ -1,0 +1,114 @@
+{% extends 'dashboard/admin.html' %}
+
+{% block content %}
+  <div class="card dashboard-hero fade-up">
+    <div class="hero-header">
+      <div>
+        <h1>Отчеты компании</h1>
+        <p class="subtle">Сводные показатели по отделам, пользователям и окладам.</p>
+      </div>
+      {% if not print_mode %}
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-inline" href="{% url 'admin-reports-export' %}">Экспорт Excel</a>
+          <a class="btn btn-ghost btn-inline" href="{% url 'admin-reports' %}?print=1" target="_blank" rel="noopener">
+            Скачать PDF
+          </a>
+        </div>
+      {% endif %}
+    </div>
+    <div class="hero-meta">
+      <div class="meta-chip">
+        Отделов: {{ stats.total_departments }} · активных: {{ stats.active_departments }} · архивных: {{ stats.archived_departments }}
+      </div>
+      <div class="meta-chip">
+        Сотрудников: {{ stats.total_users }} · активных: {{ stats.active_users }} · деактивированных: {{ stats.inactive_users }}
+      </div>
+      <div class="meta-chip">Последнее обновление: {{ stats.last_updated }}</div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card stat-card">
+      <div class="stat-label">Отделов без менеджера</div>
+      <div class="stat-value">{{ stats.departments_without_manager }}</div>
+      <div class="stat-note">Назначено менеджеров: {{ stats.assigned_managers }}</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Средний оклад</div>
+      <div class="stat-value">
+        {% if stats.avg_salary %}{{ stats.avg_salary }} ₽/мес{% else %}—{% endif %}
+      </div>
+      <div class="stat-note">
+        Максимум: {% if stats.max_salary %}{{ stats.max_salary }} ₽/мес{% else %}—{% endif %}
+      </div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Всего менеджеров</div>
+      <div class="stat-value">{{ stats.managers_total }}</div>
+      <div class="stat-note">По всем отделам</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Должностей в базе</div>
+      <div class="stat-value">{{ stats.total_positions }}</div>
+      <div class="stat-note">Справочник должностей по отделам</div>
+    </div>
+  </div>
+
+  <section class="card section-block">
+    <div class="section-header">
+      <div>
+        <h2>Ключевая аналитика</h2>
+        <p class="subtle">Топ отделов и распределение сотрудников.</p>
+      </div>
+    </div>
+    <div class="reports-grid">
+      <div class="mini-card">
+        <div class="mini-title">Топ отделов по числу сотрудников</div>
+        {% if top_departments %}
+          <ol class="mini-list">
+            {% for department in top_departments %}
+              <li>{{ department.name }} — {{ department.employees_count }} сотрудников</li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <div class="mini-note">Нет данных по отделам.</div>
+        {% endif %}
+      </div>
+      <div class="mini-card">
+        <div class="mini-title">Топ должностей</div>
+        {% if top_positions %}
+          <ol class="mini-list">
+            {% for position in top_positions %}
+              <li>{{ position.position }} — {{ position.total }} сотрудников</li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <div class="mini-note">Нет данных по должностям.</div>
+        {% endif %}
+      </div>
+      <div class="mini-card chart-placeholder">
+        <div class="mini-title">Распределение сотрудников по отделам</div>
+        <div class="chart-bars">
+          {% if department_bars %}
+            {% for item in department_bars %}
+              <span style="height: {{ item.height }}%" title="{{ item.name }} — {{ item.employees_count }}"></span>
+            {% endfor %}
+          {% else %}
+            <span style="height: 12%"></span>
+          {% endif %}
+        </div>
+        <div class="mini-note">
+          {% if department_bars %}Всего активных отделов: {{ stats.active_departments }}{% else %}Нет данных{% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% if print_mode %}
+    <script>
+      window.addEventListener("load", () => {
+        window.print();
+      });
+    </script>
+  {% endif %}
+{% endblock %}

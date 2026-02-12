@@ -1,0 +1,139 @@
+{% extends 'dashboard/manager.html' %}
+
+{% block content %}
+  <div
+    class="card dashboard-hero fade-up"
+    data-manager-employees
+  >
+    <div class="hero-header">
+      <div>
+        <h1>{{ page_title }}</h1>
+        <p class="subtle">{{ page_subtitle }}</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-chip">Отдел: {{ department_name }}</div>
+      <div class="meta-chip">Сотрудников: {{ stats.total }}</div>
+      <div class="meta-chip">Активные: {{ stats.active }}</div>
+      <div class="meta-chip">Неактивные: {{ stats.inactive }}</div>
+    </div>
+  </div>
+
+  <section class="card section-block manager-employees" data-employee-section>
+    <div class="section-header">
+      <div>
+        <h2>Сотрудники отдела</h2>
+        <p class="subtle">Фильтры, контакты и отметки отпусков/больничных в карточке сотрудника.</p>
+      </div>
+    </div>
+
+    <div class="table-toolbar employee-toolbar">
+      <div class="table-filters">
+        <label class="search-field">
+          <input type="search" name="employee_search" placeholder="Поиск по ФИО, телефону или email" data-employee-search />
+        </label>
+        <div class="filter-group">
+          <div class="custom-select" data-custom-select>
+            <select class="filter-select" name="position" data-employee-position-filter>
+              <option value="">Все должности</option>
+              {% for position in positions %}
+                <option value="{{ position|lower }}">{{ position }}</option>
+              {% endfor %}
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>Все должности</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu></div>
+          </div>
+          <div class="custom-select" data-custom-select>
+            <select class="filter-select" name="status" data-employee-status-filter>
+              <option value="">Все статусы</option>
+              <option value="active">Активные</option>
+              <option value="vacation">В отпуске</option>
+              <option value="sick">Больничный</option>
+              <option value="inactive">Неактивные</option>
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>Все статусы</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu></div>
+          </div>
+          <button class="icon-action filter-reset" type="button" data-employee-reset aria-label="Сбросить фильтры">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
+        <div class="tab-bar" data-employee-status-tabs>
+          <button class="tab-pill active" type="button" data-status-tab="all">Все</button>
+          <button class="tab-pill" type="button" data-status-tab="active">Активные</button>
+          <button class="tab-pill" type="button" data-status-tab="inactive">Деактивированные</button>
+        </div>
+      </div>
+      <div class="table-meta">
+        <span class="subtle" data-employee-count>Показано: {{ stats.total }} из {{ stats.total }}</span>
+      </div>
+    </div>
+
+    <div class="data-table-wrap data-table-scroll" data-employee-table>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ФИО</th>
+            <th>Должность</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Оклад</th>
+            <th>Статус</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody data-employee-rows>
+          {% if employees %}
+            {% for employee in employees %}
+              <tr
+                data-employee-row
+                class="{% if employee.status_code == 'inactive' %}is-inactive{% endif %}"
+                data-employee-id="{{ employee.id }}"
+                data-name="{{ employee.full_name|default:''|lower }}"
+                data-position="{{ employee.position|default:''|lower }}"
+                data-status="{{ employee.status_code }}"
+                data-phone="{{ employee.phone|default:''|lower }}"
+                data-email="{{ employee.email|default:''|lower }}"
+                data-salary="{{ employee.salary_display }}"
+              >
+                <td>{{ employee.full_name }}</td>
+                <td>{{ employee.position }}</td>
+                <td>{{ employee.phone }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.salary_display }}</td>
+                <td>
+                  <span class="status-pill {{ employee.status_class }}" data-status-pill>{{ employee.status_label }}</span>
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <a class="icon-action" href="{% url 'manager-employee-detail' employee.id %}" aria-label="Открыть карточку сотрудника">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6" />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+          <tr data-empty-row{% if employees %} hidden{% endif %}>
+            <td colspan="7">Сотрудники не найдены.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

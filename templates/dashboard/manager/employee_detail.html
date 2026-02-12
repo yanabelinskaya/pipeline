@@ -1,0 +1,161 @@
+{% extends 'dashboard/manager.html' %}
+
+{% block content %}
+  <div
+    class="manager-employee-page"
+    data-manager-employee-detail
+    data-absence-url="{% url 'api-employee-absences' employee.id %}"
+    data-employee-active="{{ employee.is_active|yesno:'true,false' }}"
+  >
+    <div class="profile-hero card fade-up manager-employee-hero">
+      <div class="profile-topbar">
+        <a class="back-link" href="{% url 'manager-employees' %}" aria-label="Назад к сотрудникам отдела">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Назад
+        </a>
+        <span class="status-pill {{ employee.status_class }}" data-employee-status-pill>{{ employee.status_label }}</span>
+      </div>
+      <div class="profile-hero-body">
+        <div class="profile-hero-text">
+          <h1>{{ employee.full_name }}</h1>
+          <p class="subtle">{{ employee.position|default:"—" }} · {{ employee.department_name|default:"—" }}</p>
+          <div class="profile-chips">
+            <span class="info-chip">{{ employee.email|default:"—" }}</span>
+            <span class="info-chip">{{ employee.phone|default:"—" }}</span>
+            <span class="info-chip">{{ employee.salary_display|default:"—" }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-grid manager-employee-grid">
+    <section class="card section-block manager-employee-card">
+      <div class="section-header">
+        <div>
+          <h3>Основная информация</h3>
+          <p class="subtle">Контакты, должность и условия.</p>
+        </div>
+      </div>
+      <div class="info-list">
+        <div class="info-row">
+          <div class="info-label">ФИО</div>
+          <div class="info-value">{{ employee.full_name }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Должность</div>
+          <div class="info-value">{{ employee.position|default:"—" }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Отдел</div>
+          <div class="info-value">{{ employee.department_name|default:"—" }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Телефон</div>
+          <div class="info-value">{{ employee.phone|default:"—" }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Почта</div>
+          <div class="info-value">{{ employee.email|default:"—" }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Оклад</div>
+          <div class="info-value">{{ employee.salary_display|default:"—" }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Статус</div>
+          <div class="info-value" data-employee-status-label>{{ employee.status_label }}</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section-block manager-employee-card" data-absence-panel>
+      <div class="section-header">
+        <div>
+          <h3>Отметить отсутствие</h3>
+          <p class="subtle">Выберите период. Система вернет сотрудника в работу автоматически после окончания.</p>
+        </div>
+        <div class="tab-bar" data-absence-type-tabs>
+          <button class="tab-pill active" type="button" data-absence-type="vacation">Отпуск</button>
+          <button class="tab-pill" type="button" data-absence-type="sick">Больничный</button>
+        </div>
+      </div>
+
+      <div class="absence-meta-grid">
+        <div class="absence-meta-card">
+          <div class="employee-meta-label">Выбранный период</div>
+          <div class="employee-detail-value" data-absence-range>—</div>
+        </div>
+        <div class="absence-meta-card" data-vacation-balance>
+          <div class="employee-meta-label">Отпуск в этом году</div>
+          <div class="employee-detail-value" data-vacation-balance-value>—</div>
+        </div>
+        <div class="absence-meta-card">
+          <div class="employee-meta-label">Правила</div>
+          <div class="employee-detail-value" data-absence-hint>От 14 до 28 дней, максимум 2 периода</div>
+        </div>
+      </div>
+
+      <div class="absence-calendar">
+        <div class="absence-calendar-header">
+          <button class="icon-action" type="button" data-calendar-prev aria-label="Предыдущий месяц">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="absence-calendar-title" data-calendar-title>Март 2026</div>
+          <button class="icon-action" type="button" data-calendar-next aria-label="Следующий месяц">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+        <div class="absence-calendar-weekdays">
+          <div>Пн</div>
+          <div>Вт</div>
+          <div>Ср</div>
+          <div>Чт</div>
+          <div>Пт</div>
+          <div>Сб</div>
+          <div>Вс</div>
+        </div>
+        <div class="absence-calendar-grid" data-calendar-grid></div>
+      </div>
+
+      <div class="absence-legend">
+        <div class="legend-item">
+          <span class="legend-dot is-selected"></span>
+          Выбранный период
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot is-vacation"></span>
+          Отпуск
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot is-sick"></span>
+          Больничный
+        </div>
+      </div>
+
+      <div class="form-message" data-absence-message hidden></div>
+      <div class="absence-actions">
+        <button class="btn btn-ghost btn-inline" type="button" data-absence-reset>Сбросить выбор</button>
+        <button class="btn btn-primary btn-inline" type="button" data-absence-save>Сохранить</button>
+      </div>
+    </section>
+
+    <section class="card section-block manager-employee-card">
+      <div class="section-header">
+        <div>
+          <h3>История отсутствий</h3>
+          <p class="subtle">Все сохраненные отпуска и больничные.</p>
+        </div>
+      </div>
+      <div class="employee-absence-list" data-absence-list>
+        <div class="subtle">Загрузка...</div>
+      </div>
+    </section>
+    </div>
+  </div>
+{% endblock %}

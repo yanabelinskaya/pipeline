@@ -1,0 +1,175 @@
+{% extends 'dashboard/admin.html' %}
+
+{% block content %}
+  <div
+    class="card dashboard-hero fade-up"
+    data-admin-departments
+    data-departments-url="{% url 'api-departments' %}"
+    data-department-archive-base="{% url 'api-department-archive' 0 %}"
+  >
+    <div class="hero-header">
+      <div>
+        <h1>Отделы</h1>
+        <p class="subtle">Правила, лимиты и управляемое распределение персонала.</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-chip">{{ stats.total_departments }} отделов · {{ stats.total_employees }} сотрудников</div>
+      <div class="meta-chip">Менеджеров назначено: {{ stats.assigned_managers }} из {{ stats.total_departments }}</div>
+      <div class="meta-chip">Последнее обновление: {{ stats.last_updated }}</div>
+    </div>
+  </div>
+
+  <section class="card section-block">
+    <div class="section-header">
+      <div>
+        <h2>Каталог отделов</h2>
+        <p class="subtle">Текущие менеджеры, состав и перечень должностей.</p>
+      </div>
+      <div class="section-actions">
+        <button class="btn btn-primary btn-inline" type="button" data-action="open-add-department">Создать отдел</button>
+        <button class="btn btn-ghost btn-inline" type="button" data-action="toggle-department-archive" disabled>
+          Архивация отдела
+        </button>
+      </div>
+    </div>
+    <div class="department-toolbar">
+      <div class="department-filters">
+        <label class="search-field search-field--icon">
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+              <path d="M16.5 16.5 21 21" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </span>
+          <input type="search" name="department_search" placeholder="Поиск по названию отдела" data-department-search />
+        </label>
+        <div class="department-toggle" data-department-view>
+          <button class="tab-pill active" type="button" data-view="active">Активные</button>
+          <button class="tab-pill" type="button" data-view="archived">Архивные</button>
+        </div>
+      </div>
+      <div class="department-meta">
+        <span class="subtle" data-department-count>Показано: {{ departments|length }}</span>
+      </div>
+    </div>
+    <div class="form-message" data-global-message hidden></div>
+    <div class="card-grid department-grid" data-department-cards>
+      {% if departments %}
+        {% for department in departments %}
+          <div
+            class="mini-card{% if department.is_archived %} is-archived{% endif %}"
+            data-department-card
+            data-department-id="{{ department.id }}"
+            data-department-name="{{ department.name|lower }}"
+            data-department-archived="{{ department.is_archived|yesno:'true,false' }}"
+          >
+            <div class="mini-card-header">
+              <div>
+                <div class="mini-title">{{ department.name }}</div>
+                <div class="mini-meta">Менеджер: {% if department.manager %}{{ department.manager.get_full_name|default:department.manager.username }}{% else %}не назначен{% endif %}</div>
+              </div>
+              <a
+                class="icon-action"
+                href="{% url 'admin-department-detail' department.id %}"
+                data-detail-link
+                aria-label="Подробнее об отделе"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6" />
+                </svg>
+              </a>
+            </div>
+            <div class="pill-set">
+              {% if department.positions_count %}
+                {% for position in department.positions.all|slice:":3" %}
+                  <span class="pill">{{ position.title }}</span>
+                {% endfor %}
+                {% if department.positions_count > 3 %}
+                  <span class="pill">+{{ department.positions_count|add:"-3" }}</span>
+                {% endif %}
+              {% else %}
+                <span class="pill">Должности не заданы</span>
+              {% endif %}
+            </div>
+            <div class="mini-note">
+              {{ department.employees_count|default:0 }} сотрудников · {{ department.positions_count|default:0 }} должностей
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <div class="reset-empty subtle" data-department-empty{% if departments %} hidden{% endif %}>Отделы не найдены.</div>
+    </div>
+    <div class="pagination" data-department-pagination>
+      <button class="pagination-btn" type="button" data-department-pagination-prev aria-label="Предыдущая страница">Назад</button>
+      <div class="pagination-pages" data-department-pagination-pages></div>
+      <button class="pagination-btn" type="button" data-department-pagination-next aria-label="Следующая страница">Вперед</button>
+    </div>
+  </section>
+
+  <div class="modal" data-modal="add-department" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="add-department-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="add-department-title">Новый отдел</h2>
+          <p class="subtle">Название, менеджер и должности сохраняются в базе.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <form class="form" data-department-form novalidate>
+        {% csrf_token %}
+        <div class="form-message" data-form-message hidden></div>
+        <label>
+          Название отдела
+          <input type="text" name="name" placeholder="Аналитика" required />
+        </label>
+        <label>
+          Менеджер
+          <div class="custom-select" data-custom-select>
+            <select name="manager_id" data-manager-select {% if not managers %}disabled{% endif %} required>
+              <option value="">{% if managers %}Выберите менеджера{% else %}Нет доступных менеджеров{% endif %}</option>
+              {% for manager in managers %}
+                <option value="{{ manager.id }}">{{ manager.get_full_name|default:manager.username }}</option>
+              {% endfor %}
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>{% if managers %}Выберите менеджера{% else %}Нет доступных менеджеров{% endif %}</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu>
+              <div class="custom-select-search">
+                <input type="search" placeholder="Найти менеджера" data-select-search />
+              </div>
+              <div class="custom-select-options" data-select-options></div>
+            </div>
+          </div>
+        </label>
+        <label>
+          Должности
+          <div class="tag-input" data-tag-input>
+            <div class="tag-list" data-tag-list></div>
+            <div class="tag-input-row">
+              <input type="text" placeholder="Например, Аналитик" data-tag-field />
+              <button class="btn btn-ghost btn-inline btn-sm" type="button" data-tag-add>Добавить</button>
+            </div>
+            <input type="hidden" name="positions" data-tag-storage value="[]" />
+          </div>
+          <span class="subtle">Можно добавить несколько должностей в один отдел.</span>
+        </label>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="submit">Создать отдел</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {{ departments_data|json_script:"departments-data" }}
+{% endblock %}

@@ -1,0 +1,201 @@
+{% extends 'dashboard/admin.html' %}
+
+{% block content %}
+  <div
+    class="settings-page"
+    data-admin-settings
+    data-settings-update-url="{% url 'admin-settings-update' %}"
+    data-settings-history-url="{% url 'admin-settings-history' %}"
+  >
+    <div class="card dashboard-hero fade-up">
+      <div class="hero-header">
+        <div>
+          <h1>Глобальные настройки</h1>
+          <p class="subtle">Ядро доступности, норма часов и правила переработки для всех отделов.</p>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-chip" data-summary-hours>
+          Ядро: {{ settings_data.work_days_label }} · {{ settings_data.work_start }}–{{ settings_data.work_end }}
+        </div>
+        <div class="meta-chip" data-summary-weekly>
+          Норма: {{ settings_data.weekly_hours_norm }} ч/нед
+        </div>
+        <div class="meta-chip" data-summary-shifts>
+          Типы слотов: {{ settings_data.shift_templates|length }}
+        </div>
+        <div class="meta-chip" data-summary-update>
+          Последний апдейт: {{ settings_data.updated_at|date:"d.m.Y" }}
+        </div>
+      </div>
+    </div>
+
+    <section class="card section-block" data-settings-config>
+      <div class="section-header">
+        <div>
+          <h2>Конфигурация</h2>
+          <p class="subtle">Единые правила работы и расписания для всех отделов.</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-primary btn-inline" type="button" data-settings-edit>Обновить шаблоны</button>
+          <button class="btn btn-ghost btn-inline" type="button" data-settings-cancel hidden>Отменить</button>
+        </div>
+      </div>
+      <div class="form-message" data-settings-message hidden></div>
+      <div class="settings-layout">
+        <div class="settings-panel">
+          <div class="settings-panel-header">
+            <h3>Ядро доступности</h3>
+            <p class="subtle">В эти часы команда должна быть на связи.</p>
+          </div>
+          <div class="form">
+            <label>
+              Начало дня
+              <div class="custom-select" data-custom-select>
+                <select name="work_start" data-settings-input disabled>
+                  {% for option in time_options %}
+                    <option value="{{ option }}" {% if option == settings_data.work_start %}selected{% endif %}>
+                      {{ option }}
+                    </option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label>{{ settings_data.work_start }}</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-search">
+                    <input type="search" placeholder="Найти время" data-select-search />
+                  </div>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label>
+              Конец дня
+              <div class="custom-select" data-custom-select>
+                <select name="work_end" data-settings-input disabled>
+                  {% for option in time_options %}
+                    <option value="{{ option }}" {% if option == settings_data.work_end %}selected{% endif %}>
+                      {{ option }}
+                    </option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label>{{ settings_data.work_end }}</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-search">
+                    <input type="search" placeholder="Найти время" data-select-search />
+                  </div>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label>
+              Рабочие дни
+              <div class="custom-select" data-custom-select>
+                <select name="work_days" data-settings-input disabled>
+                  {% for value, label in work_days_options %}
+                    <option value="{{ value }}" {% if value == settings_data.work_days %}selected{% endif %}>
+                      {{ label }}
+                    </option>
+                  {% endfor %}
+                </select>
+                <button class="custom-select-trigger" type="button" data-select-trigger>
+                  <span data-select-label>{{ settings_data.work_days_label }}</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="custom-select-menu" data-select-menu>
+                  <div class="custom-select-search">
+                    <input type="search" placeholder="Найти режим" data-select-search />
+                  </div>
+                  <div class="custom-select-options" data-select-options></div>
+                </div>
+              </div>
+            </label>
+            <label>
+              Норма часов в неделю
+              <input
+                type="number"
+                name="weekly_hours_norm"
+                value="{{ settings_data.weekly_hours_norm }}"
+                min="1"
+                step="1"
+                data-settings-input
+                disabled
+              />
+            </label>
+          </div>
+        </div>
+
+        
+        <div class="settings-panel">
+          <div class="settings-panel-header">
+            <h3>Типы слотов</h3>
+            <p class="subtle">Шаблоны слотов + возможность добавлять собственные.</p>
+          </div>
+          <div class="tag-input settings-tag-input" data-tag-input data-settings-tags>
+            <div class="tag-list" data-tag-list>
+              {% for shift in settings_data.shift_templates %}
+                <span class="tag" data-tag-value="{{ shift }}">
+                  <span class="tag-label">{{ shift }}</span>
+                  <button class="tag-remove" type="button" aria-label="Удалить" disabled>×</button>
+                </span>
+              {% endfor %}
+            </div>
+            <div class="tag-input-row">
+              <input type="text" placeholder="Новый слот, например 09:00-17:00" data-tag-field disabled />
+              <button class="btn btn-ghost btn-inline btn-sm" type="button" data-tag-add disabled>Добавить</button>
+            </div>
+            <input
+              type="hidden"
+              name="shift_templates"
+              data-tag-storage
+              value='{{ shift_templates_json|escapejs }}'
+            />
+          </div>
+          <label class="settings-checkbox">
+            <span class="checkbox">
+              <input
+                type="checkbox"
+                name="allow_custom_shifts"
+                {% if settings_data.allow_custom_shifts %}checked{% endif %}
+                data-settings-input
+                disabled
+              />
+              <span class="checkbox-mark"></span>
+            </span>
+            Разрешить сотрудникам задавать собственные слоты
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section-block" data-settings-history>
+      <div class="section-header">
+        <div>
+          <h2>История правок</h2>
+          <p class="subtle">Здесь отображаются изменения, которые делал текущий администратор.</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-ghost btn-inline" type="button" data-settings-history>История правок</button>
+        </div>
+      </div>
+      <div class="form-message" data-history-message hidden></div>
+      <div class="settings-history">
+        <div class="reset-empty subtle" data-history-empty>
+          Нажмите «История правок», чтобы загрузить журнал изменений.
+        </div>
+        <div class="settings-history-list" data-history-list hidden></div>
+      </div>
+    </section>
+  </div>
+{% endblock %}

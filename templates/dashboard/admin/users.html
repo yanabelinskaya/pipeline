@@ -1,0 +1,403 @@
+{% extends 'dashboard/admin.html' %}
+{% load static %}
+
+{% block content %}
+  <div
+    class="card dashboard-hero fade-up"
+    data-admin-users
+    data-employees-url="{% url 'api-employees' %}"
+    data-import-url="{% url 'api-employees-import' %}"
+    data-user-detail-base="{% url 'admin-user-detail' 0 %}"
+    data-bulk-deactivate-url="{% url 'api-employees-deactivate' %}"
+    data-bulk-activate-url="{% url 'api-employees-activate' %}"
+  >
+    <div class="hero-header">
+      <div>
+        <h1>Пользователи</h1>
+        <p class="subtle">Создание аккаунтов, роли и статусы доступа.</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-chip">{{ stats.total_users }} пользователей · {{ stats.inactive_users }} деактивированы</div>
+      <div class="meta-chip">{{ stats.departments_total }} отделов · 3 роли</div>
+      <div class="meta-chip">Последнее обновление: {{ stats.last_updated }}</div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card stat-card">
+      <div class="stat-label">Всего сотрудников</div>
+      <div class="stat-value">{{ stats.total_users }}</div>
+      <div class="stat-note">Включая менеджеров</div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Активные</div>
+      <div class="stat-value">{{ stats.active_users }}</div>
+      <div class="stat-note">
+        {% if stats.total_users %}
+          {{ stats.active_users }} из {{ stats.total_users }}
+        {% else %}
+          Нет данных
+        {% endif %}
+      </div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">Запросы на доступ</div>
+      <div class="stat-value">{{ stats.pending_requests }}</div>
+      <div class="stat-note">Ожидают подтверждения</div>
+    </div>
+  </div>
+
+  <section class="card reset-requests" data-reset-requests data-reset-resolve-url="{% url 'api-password-reset-resolve' 0 %}">
+    <div class="section-header">
+      <div>
+        <h3>Запросы на восстановление доступа</h3>
+        <p class="subtle">Пользователи запросили сброс пароля.</p>
+      </div>
+    </div>
+    <div class="reset-requests-list">
+      {% if reset_requests %}
+        {% for request in reset_requests %}
+          <div class="reset-request" data-request-id="{{ request.id }}">
+            <div>
+              <div class="reset-name">{{ request.full_name }}</div>
+              <div class="subtle">{{ request.email }}</div>
+            </div>
+            <div class="reset-meta">
+              <span class="subtle">{{ request.created_at|date:"d.m.Y H:i" }}</span>
+              <button class="btn btn-ghost btn-inline btn-sm" type="button" data-request-resolve>Восстановить</button>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="reset-empty subtle">Запросов нет.</div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="card section-block">
+    <div class="section-header">
+      <div>
+        <h2>Список пользователей</h2>
+        <p class="subtle">Назначение ролей, смена отдела и управление статусом.</p>
+      </div>
+      <div class="section-actions">
+        <button class="btn btn-primary btn-inline" type="button" data-action="open-add-user">Новый пользователь</button>
+        <button class="btn btn-ghost btn-inline" type="button" data-action="open-import">Импорт из Excel</button>
+      </div>
+    </div>
+    <div class="form-message" data-global-message hidden></div>
+
+    <div class="table-toolbar">
+      <div class="table-filters">
+        <label class="search-field">
+          <input type="search" name="employee_search" placeholder="Поиск по ФИО" data-filter-search />
+        </label>
+        <div class="filter-group">
+          <div class="custom-select" data-custom-select>
+            <select class="filter-select" name="role" data-filter-role>
+              <option value="">Все роли</option>
+              <option value="manager">Менеджер</option>
+              <option value="employee">Сотрудник</option>
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>Все роли</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu></div>
+          </div>
+          <div class="custom-select" data-custom-select>
+            <select class="filter-select" name="department" data-filter-department>
+              <option value="">Все отделы</option>
+              {% for department in departments %}
+                <option value="{{ department.name }}">{{ department.name }}</option>
+              {% endfor %}
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>Все отделы</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu></div>
+          </div>
+        </div>
+        <div class="tab-bar" data-employee-status>
+          <button class="tab-pill active" type="button" data-status="all">Все</button>
+          <button class="tab-pill" type="button" data-status="active">Активные</button>
+          <button class="tab-pill" type="button" data-status="inactive">Деактивированные</button>
+        </div>
+      </div>
+      <div class="table-meta">
+        <span data-bulk-hint>Выберите сотрудников для массовых действий.</span>
+        <div class="bulk-actions">
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-bulk-activate hidden>Активировать</button>
+          <button class="btn btn-ghost btn-inline btn-sm" type="button" data-bulk-deactivate hidden>Деактивировать</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-table-wrap data-table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>
+              <label class="checkbox">
+                <input type="checkbox" data-select-all />
+                <span class="checkbox-mark"></span>
+              </label>
+            </th>
+            <th>ФИО</th>
+            <th>Email</th>
+            <th>Отдел</th>
+            <th>Роль</th>
+            <th>Статус</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody data-employee-rows>
+          {% if employees %}
+            {% for employee in employees %}
+              <tr data-id="{{ employee.id }}" data-active="{{ employee.is_active|yesno:'true,false' }}" data-name="{{ employee.full_name|default:''|lower }}" data-role="{{ employee.role_code|default:'' }}" data-department="{{ employee.department_value|default:'' }}">
+                <td>
+                  <label class="checkbox">
+                    <input type="checkbox" data-select-row />
+                    <span class="checkbox-mark"></span>
+                  </label>
+                </td>
+                <td>{{ employee.full_name }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.department }}</td>
+                <td>
+                  {{ employee.role_display|default:"—" }}
+                </td>
+                <td>
+                  <span class="status-dot {{ employee.status_class }}" aria-hidden="true"></span>
+                  <span class="sr-only">{{ employee.status_label }}</span>
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <a class="icon-action" href="{% url 'admin-user-detail' employee.id %}" aria-label="Подробнее о сотруднике">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6" />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+          <tr data-empty-row{% if employees %} hidden{% endif %}>
+            <td colspan="7">Сотрудники не найдены.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" data-pagination>
+      <button class="pagination-btn" type="button" data-pagination-prev aria-label="Предыдущая страница">Назад</button>
+      <div class="pagination-pages" data-pagination-pages></div>
+      <button class="pagination-btn" type="button" data-pagination-next aria-label="Следующая страница">Вперед</button>
+    </div>
+  </section>
+
+  <div class="modal" data-modal="add-user" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="add-user-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="add-user-title">Новый сотрудник</h2>
+          <p class="subtle">ФИО, контакты и отдел сохраняются в базе и доступны через API.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <form class="form" data-employee-form novalidate>
+        {% csrf_token %}
+        <div class="form-message" data-form-message hidden></div>
+        <div class="form-grid">
+          <label>
+            Фамилия
+            <input type="text" name="last_name" placeholder="Иванов" required />
+          </label>
+          <label>
+            Имя
+            <input type="text" name="first_name" placeholder="Иван" required />
+          </label>
+        </div>
+        <div class="form-grid">
+          <label>
+            Email
+            <input
+              type="email"
+              name="email"
+              placeholder="employee@conector.ru"
+              inputmode="email"
+              autocomplete="email"
+              data-email-input
+              required
+            />
+          </label>
+          <label>
+            Корпоративный телефон
+            <input
+              type="tel"
+              name="corporate_phone"
+              placeholder="+7 (900) 000-00-00"
+              inputmode="tel"
+              maxlength="18"
+              data-phone-input
+            />
+          </label>
+        </div>
+        <label>
+          Роль
+          <div class="custom-select" data-custom-select>
+            <select name="role" data-role-select required>
+              <option value="employee" selected>Сотрудник</option>
+              <option value="manager">Менеджер</option>
+            </select>
+            <button class="custom-select-trigger" type="button" data-select-trigger>
+              <span data-select-label>Сотрудник</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="custom-select-menu" data-select-menu></div>
+          </div>
+        </label>
+        <div class="form-grid">
+          <label>
+            Отдел
+            <div class="custom-select" data-custom-select>
+              <select name="department_id" data-department-select required>
+                <option value="">Выберите отдел</option>
+                {% for department in departments %}
+                  <option value="{{ department.id }}" data-name="{{ department.name }}">{{ department.name }}</option>
+                {% endfor %}
+              </select>
+              <button class="custom-select-trigger" type="button" data-select-trigger>
+                <span data-select-label>Выберите отдел</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="custom-select-menu" data-select-menu></div>
+            </div>
+          </label>
+          <label>
+            Должность
+            <div class="custom-select" data-custom-select>
+              <select name="position" data-position-select disabled required>
+                <option value="">Выберите должность</option>
+              </select>
+              <button class="custom-select-trigger" type="button" data-select-trigger>
+                <span data-select-label>Выберите должность</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="custom-select-menu" data-select-menu></div>
+            </div>
+          </label>
+        </div>
+        <label>
+          Оклад (₽/мес)
+          <input type="number" name="monthly_salary" min="0" step="0.01" placeholder="120000" />
+        </label>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="submit">Создать сотрудника</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="import-users" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="import-users-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="import-users-title">Импорт сотрудников из Excel</h2>
+          <p class="subtle">Загрузите файл и добавьте сотрудников массово.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <form class="form" data-import-form>
+        <div class="form-message" data-import-message hidden></div>
+        <label class="file-drop" data-file-drop>
+          <input type="file" name="employees_file" accept=".xlsx,.xls,.csv" />
+          <span>
+            Перетащите файл сюда или нажмите, чтобы выбрать
+            <span class="file-hint">Поддерживаются XLSX, XLS, CSV</span>
+          </span>
+          <span class="file-name" data-file-name>Файл не выбран</span>
+        </label>
+        <div class="form-row">
+          <a class="text-link" href="{% static 'samples/employees_sample.xlsx' %}" download>Скачать образец Excel</a>
+          <span class="subtle">Файл должен содержать ФИО, email, роль и отдел.</span>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="submit">Загрузить и добавить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="bulk-deactivate" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="bulk-deactivate-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="bulk-deactivate-title">Деактивация сотрудников</h2>
+          <p class="subtle">Доступ к сайту будет отключен для выбранных сотрудников.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body subtle">
+        Вы уверены, что хотите деактивировать выбранных сотрудников? Они потеряют доступ к сайту.
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-danger" type="button" data-bulk-confirm>Деактивировать</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="bulk-activate" aria-hidden="true">
+    <div class="modal-overlay" data-action="close-modal"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="bulk-activate-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="bulk-activate-title">Активация сотрудников</h2>
+          <p class="subtle">Доступ к сайту будет снова открыт для выбранных сотрудников.</p>
+        </div>
+        <button class="icon-action" type="button" data-action="close-modal" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body subtle">
+        Вы уверены, что хотите активировать выбранных сотрудников? Доступ к сайту будет восстановлен.
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" type="button" data-bulk-activate-confirm>Активировать</button>
+      </div>
+    </div>
+  </div>
+
+  {{ department_positions|json_script:"department-positions-data" }}
+{% endblock %}

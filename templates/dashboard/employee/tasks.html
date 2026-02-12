@@ -1,0 +1,218 @@
+{% extends 'dashboard/employee.html' %}
+
+{% block content %}
+  <div
+    class="employee-tasks"
+    data-employee-tasks
+    data-task-update-url="{% url 'employee-task-update' 0 %}"
+    data-task-submit-url="{% url 'employee-task-submit' 0 %}"
+  >
+    <div class="card dashboard-hero fade-up">
+      <div class="hero-header">
+        <div>
+          <h1>{{ page_title }}</h1>
+          <p class="subtle">{{ page_subtitle }}</p>
+        </div>
+        <div class="hero-actions period-bar">
+          <div class="period-switch">
+            <a
+              class="btn btn-inline btn-sm{% if task_view == 'active' %} btn-primary{% else %} btn-ghost{% endif %}"
+              href="?view=active"
+            >
+              Активные
+            </a>
+            <a
+              class="btn btn-inline btn-sm{% if task_view == 'archive' %} btn-primary{% else %} btn-ghost{% endif %}"
+              href="?view=archive"
+            >
+              Архив
+            </a>
+          </div>
+          <div class="view-switch" data-task-view-switch>
+            <button class="btn btn-ghost btn-inline btn-sm" type="button" data-task-view-toggle data-view="board">
+              Доска
+            </button>
+            <button class="btn btn-ghost btn-inline btn-sm" type="button" data-task-view-toggle data-view="list">
+              Список
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-chip">Отдел: {{ department_name }}</div>
+        <div class="meta-chip">Всего: <span data-task-summary="total">{{ tasks_total }}</span></div>
+        <div class="meta-chip">Назначены: <span data-task-summary="todo">{{ tasks_todo }}</span></div>
+        <div class="meta-chip">В работе: <span data-task-summary="in_progress">{{ tasks_progress }}</span></div>
+        <div class="meta-chip">Сдано: <span data-task-summary="done">{{ tasks_done }}</span></div>
+        <div class="meta-chip">Просрочено: <span data-task-summary="overdue">{{ tasks_overdue }}</span></div>
+      </div>
+    </div>
+
+    <div class="form-message" data-task-message hidden></div>
+
+    {% if tasks_total == 0 %}
+      <section class="card section-block task-empty-state">
+        <div class="task-empty-hero">
+          <div class="task-empty-badge">
+            {% if task_view == 'archive' %}
+              Архив пуст
+            {% else %}
+              Задач пока нет
+            {% endif %}
+          </div>
+          <h2>
+            {% if task_view == 'archive' %}
+              Вы еще ничего не сдавали
+            {% else %}
+              Сегодня спокойно
+            {% endif %}
+          </h2>
+          <p class="subtle">
+            {% if task_view == 'archive' %}
+              Как только отчеты появятся, они будут храниться здесь вместе с файлами и комментариями.
+            {% else %}
+              Менеджер назначит задачи, и они появятся на доске. Следите за уведомлениями и сроками.
+            {% endif %}
+          </p>
+          <div class="task-empty-points">
+            <div class="task-empty-point">
+              Сдавайте задачи прямо на карточке и прикладывайте документы.
+            </div>
+            <div class="task-empty-point">
+              Меняйте статус задач мышкой или быстрыми кнопками.
+            </div>
+            <div class="task-empty-point">
+              Просроченные задачи подсветятся автоматически.
+            </div>
+          </div>
+        </div>
+      </section>
+    {% else %}
+      <section class="card section-block" data-task-view-section="board">
+        <div class="section-header">
+          <div>
+            <h2>Доска задач</h2>
+            <p class="subtle">Перетаскивайте карточки между колонками или меняйте статус вручную.</p>
+          </div>
+          <div class="section-actions">
+            <span class="info-chip">Менеджер: {{ manager_label }}</span>
+          </div>
+        </div>
+
+        <div class="task-board" data-task-board>
+          {% for column in task_columns %}
+            <div class="task-column" data-task-column data-status="{{ column.id }}">
+              <div class="task-column-header">
+                <div>
+                  <h3>{{ column.label }}</h3>
+                  <p class="subtle">{{ column.hint }}</p>
+                </div>
+                <span class="pill" data-task-count>{{ column.tasks|length }}</span>
+              </div>
+              <div class="task-column-body" data-task-list>
+                {% if column.tasks %}
+                  {% for task in column.tasks %}
+                    <article
+                      class="task-card employee-task-card{% if task.is_overdue %} is-overdue{% endif %}{% if task.needs_attention %} is-attention{% endif %}{% if task.status == 'done' %} is-done{% endif %}"
+                      draggable="true"
+                      data-task-card
+                      data-task-item
+                      data-task-id="{{ task.id }}"
+                      data-task-status="{{ task.status }}"
+                    >
+                      <div class="task-card-top">
+                        <div>
+                          <div class="task-card-title">
+                            <span class="priority-dot is-{{ task.priority }}" aria-hidden="true"></span>
+                            <h3>{{ task.title }}</h3>
+                          </div>
+                          <div class="task-card-meta">
+                            <p class="subtle">{{ task.due_label }}</p>
+                            {% if task.needs_attention %}
+                              <span class="task-alert-badge">Нужна доработка</span>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <span class="status-pill {{ task.status_tone }}" data-task-status-pill>{{ task.status_label }}</span>
+                      </div>
+                      <div class="task-actions">
+                        {% if task.status != 'done' %}
+                          <button
+                            class="btn btn-ghost btn-inline btn-xs"
+                            type="button"
+                            data-task-action
+                            data-target-status="in_progress"
+                          >
+                            В работу
+                          </button>
+                          <button
+                            class="btn btn-ghost btn-inline btn-xs"
+                            type="button"
+                            data-task-action
+                            data-target-status="done"
+                          >
+                            Выполнено
+                          </button>
+                        {% endif %}
+                        <a class="btn btn-primary btn-inline btn-xs" href="{% url 'employee-task-detail' task.id %}?view={{ task_view }}&layout=board">
+                          Подробнее
+                        </a>
+                      </div>
+                    </article>
+                  {% endfor %}
+                {% endif %}
+                <div class="task-empty" data-task-empty{% if column.tasks %} hidden{% endif %}>
+                  {% if task_view == 'archive' %}
+                    Архив пуст.
+                  {% else %}
+                    Нет задач в этой колонке.
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="card section-block task-list-view" data-task-view-section="list" hidden>
+        <div class="section-header">
+          <div>
+            <h2>Список задач</h2>
+            <p class="subtle">Компактный список с быстрым переходом к деталям.</p>
+          </div>
+          <div class="section-actions">
+            <span class="info-chip">Всего: {{ tasks_total }}</span>
+          </div>
+        </div>
+        <div class="task-list">
+          {% for task in task_list %}
+            <article
+              class="task-list-item{% if task.is_overdue %} is-overdue{% endif %}{% if task.needs_attention %} is-attention{% endif %}{% if task.status == 'done' %} is-done{% endif %}"
+              data-task-item
+              data-task-id="{{ task.id }}"
+              data-task-status="{{ task.status }}"
+            >
+              <div class="task-list-main">
+                <div class="task-card-title">
+                  <h3>{{ task.title }}</h3>
+                </div>
+                <div class="task-list-meta">
+                  <span class="task-list-due">{{ task.due_label }}</span>
+                  {% if task.needs_attention %}
+                    <span class="task-alert-badge">Нужна доработка</span>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="task-list-side">
+                <span class="status-pill {{ task.status_tone }}" data-task-status-pill>{{ task.status_label }}</span>
+                <a class="btn btn-ghost btn-inline btn-xs" href="{% url 'employee-task-detail' task.id %}?view={{ task_view }}&layout=list">
+                  Открыть
+                </a>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  </div>
+{% endblock %}

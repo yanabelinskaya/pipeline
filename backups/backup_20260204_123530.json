@@ -1,0 +1,3629 @@
+[
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "authtoken",
+    "model": "token"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "authtoken",
+    "model": "tokenproxy"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "employeeprofile"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "department"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "passwordresetrequest"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "departmentposition"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "globalsettingschange"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "globalsettings"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "systemlogentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "systembackup"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "7imjhvpfgdzz3b63jcup07fvifgw126r",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGlmOs2wMJX3OEO0vJIBsKZ8KcXcSKQW0b2be23W0LkO3zjZ1o7qrq9zpd2OSp-Ud6IPyvXgpeZlG9rviDzr7tqi9bof7dzDQPGw1B0HgdJbIDWKSiEHVtEYBgBTjhSnwhihSbz2mygzrJAFqhKZSc58v6Fg3_g:1vnD1r:3nXBoKqlwf7OFPfcYg73q0NQvULV9J-WuLYMNEUQPro",
+    "expire_date": "2026-02-17T09:49:03.975Z"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 1,
+  "fields": {
+    "department": 6,
+    "title": "Разработчик"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 2,
+  "fields": {
+    "department": 6,
+    "title": "Аналитик"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 3,
+  "fields": {
+    "department": 2,
+    "title": "Frontend Architect"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 4,
+  "fields": {
+    "department": 2,
+    "title": "Frontend Team Lead"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 5,
+  "fields": {
+    "department": 2,
+    "title": "Junior Frontend Developer"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 6,
+  "fields": {
+    "department": 2,
+    "title": "Middle Frontend Developer"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 7,
+  "fields": {
+    "department": 2,
+    "title": "Senior Frontend Developer"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 8,
+  "fields": {
+    "department": 2,
+    "title": "Верстальщик"
+  }
+},
+{
+  "model": "accounts.departmentposition",
+  "pk": 9,
+  "fields": {
+    "department": 3,
+    "title": "Дизайнер"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Token",
+    "content_type": [
+      "authtoken",
+      "token"
+    ],
+    "codename": "add_token"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Token",
+    "content_type": [
+      "authtoken",
+      "token"
+    ],
+    "codename": "change_token"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Token",
+    "content_type": [
+      "authtoken",
+      "token"
+    ],
+    "codename": "delete_token"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Token",
+    "content_type": [
+      "authtoken",
+      "token"
+    ],
+    "codename": "view_token"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Token",
+    "content_type": [
+      "authtoken",
+      "tokenproxy"
+    ],
+    "codename": "add_tokenproxy"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Token",
+    "content_type": [
+      "authtoken",
+      "tokenproxy"
+    ],
+    "codename": "change_tokenproxy"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Token",
+    "content_type": [
+      "authtoken",
+      "tokenproxy"
+    ],
+    "codename": "delete_tokenproxy"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Token",
+    "content_type": [
+      "authtoken",
+      "tokenproxy"
+    ],
+    "codename": "view_tokenproxy"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add user",
+    "content_type": [
+      "accounts",
+      "user"
+    ],
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change user",
+    "content_type": [
+      "accounts",
+      "user"
+    ],
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete user",
+    "content_type": [
+      "accounts",
+      "user"
+    ],
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view user",
+    "content_type": [
+      "accounts",
+      "user"
+    ],
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add employee profile",
+    "content_type": [
+      "accounts",
+      "employeeprofile"
+    ],
+    "codename": "add_employeeprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change employee profile",
+    "content_type": [
+      "accounts",
+      "employeeprofile"
+    ],
+    "codename": "change_employeeprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete employee profile",
+    "content_type": [
+      "accounts",
+      "employeeprofile"
+    ],
+    "codename": "delete_employeeprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view employee profile",
+    "content_type": [
+      "accounts",
+      "employeeprofile"
+    ],
+    "codename": "view_employeeprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add department",
+    "content_type": [
+      "accounts",
+      "department"
+    ],
+    "codename": "add_department"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change department",
+    "content_type": [
+      "accounts",
+      "department"
+    ],
+    "codename": "change_department"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete department",
+    "content_type": [
+      "accounts",
+      "department"
+    ],
+    "codename": "delete_department"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view department",
+    "content_type": [
+      "accounts",
+      "department"
+    ],
+    "codename": "view_department"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add password reset request",
+    "content_type": [
+      "accounts",
+      "passwordresetrequest"
+    ],
+    "codename": "add_passwordresetrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change password reset request",
+    "content_type": [
+      "accounts",
+      "passwordresetrequest"
+    ],
+    "codename": "change_passwordresetrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete password reset request",
+    "content_type": [
+      "accounts",
+      "passwordresetrequest"
+    ],
+    "codename": "delete_passwordresetrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view password reset request",
+    "content_type": [
+      "accounts",
+      "passwordresetrequest"
+    ],
+    "codename": "view_passwordresetrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add department position",
+    "content_type": [
+      "accounts",
+      "departmentposition"
+    ],
+    "codename": "add_departmentposition"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change department position",
+    "content_type": [
+      "accounts",
+      "departmentposition"
+    ],
+    "codename": "change_departmentposition"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete department position",
+    "content_type": [
+      "accounts",
+      "departmentposition"
+    ],
+    "codename": "delete_departmentposition"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view department position",
+    "content_type": [
+      "accounts",
+      "departmentposition"
+    ],
+    "codename": "view_departmentposition"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add global settings change",
+    "content_type": [
+      "accounts",
+      "globalsettingschange"
+    ],
+    "codename": "add_globalsettingschange"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change global settings change",
+    "content_type": [
+      "accounts",
+      "globalsettingschange"
+    ],
+    "codename": "change_globalsettingschange"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete global settings change",
+    "content_type": [
+      "accounts",
+      "globalsettingschange"
+    ],
+    "codename": "delete_globalsettingschange"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view global settings change",
+    "content_type": [
+      "accounts",
+      "globalsettingschange"
+    ],
+    "codename": "view_globalsettingschange"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add global settings",
+    "content_type": [
+      "accounts",
+      "globalsettings"
+    ],
+    "codename": "add_globalsettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change global settings",
+    "content_type": [
+      "accounts",
+      "globalsettings"
+    ],
+    "codename": "change_globalsettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete global settings",
+    "content_type": [
+      "accounts",
+      "globalsettings"
+    ],
+    "codename": "delete_globalsettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view global settings",
+    "content_type": [
+      "accounts",
+      "globalsettings"
+    ],
+    "codename": "view_globalsettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add system log entry",
+    "content_type": [
+      "accounts",
+      "systemlogentry"
+    ],
+    "codename": "add_systemlogentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change system log entry",
+    "content_type": [
+      "accounts",
+      "systemlogentry"
+    ],
+    "codename": "change_systemlogentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete system log entry",
+    "content_type": [
+      "accounts",
+      "systemlogentry"
+    ],
+    "codename": "delete_systemlogentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view system log entry",
+    "content_type": [
+      "accounts",
+      "systemlogentry"
+    ],
+    "codename": "view_systemlogentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add system backup",
+    "content_type": [
+      "accounts",
+      "systembackup"
+    ],
+    "codename": "add_systembackup"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change system backup",
+    "content_type": [
+      "accounts",
+      "systembackup"
+    ],
+    "codename": "change_systembackup"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete system backup",
+    "content_type": [
+      "accounts",
+      "systembackup"
+    ],
+    "codename": "delete_systembackup"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view system backup",
+    "content_type": [
+      "accounts",
+      "systembackup"
+    ],
+    "codename": "view_systembackup"
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$Wc6ouLLn8jjrEEbmJdwkHB$p33KfQ5ZKRK6KB4/y0gsus5X9e7RkKUdnb2L97vLiNI=",
+    "last_login": "2026-02-03T09:49:03.969Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-01-20T10:14:05.187Z",
+    "role": "admin",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$pRlThlEQS3TVS539JrYZs2$epLpRXgG7pXptGDOKiOsyWKZM94oAc7eZ2glXsn8JIM=",
+    "last_login": "2026-01-27T13:37:29.495Z",
+    "is_superuser": false,
+    "username": "belikbelka2007",
+    "first_name": "Яна",
+    "last_name": "Белинская",
+    "email": "belikbelka2007@gmail.com",
+    "is_staff": false,
+    "is_active": false,
+    "date_joined": "2026-01-27T10:44:38.511Z",
+    "role": "employee",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$FPBPmA0pjXLsOnNa0lHGG5$jm9ej1jmWJ5jTT8dxKY6+WiQHxCHtNWb1vzs0zbjfm0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vikusik20000",
+    "first_name": "Виктория",
+    "last_name": "Белинская",
+    "email": "vikusik20000@icloud.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-01-27T10:51:42.793Z",
+    "role": "employee",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$30alTrgFXpXSMcGvqFqmFC$RwO4/R3OeWgCRp4u+9h/PNQvjWowM9Nkx8HrbOMJ4hQ=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "maria_samoylova",
+    "first_name": "Мария",
+    "last_name": "Самойлова",
+    "email": "maria_samoylova@conector.ru",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-01-31T09:32:31.771Z",
+    "role": "manager",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.department",
+  "pk": 1,
+  "fields": {
+    "name": "Бекенд",
+    "manager": null,
+    "is_archived": false
+  }
+},
+{
+  "model": "accounts.department",
+  "pk": 2,
+  "fields": {
+    "name": "Фронтэнд",
+    "manager": [
+      "maria_samoylova"
+    ],
+    "is_archived": false
+  }
+},
+{
+  "model": "accounts.department",
+  "pk": 3,
+  "fields": {
+    "name": "Дизайн",
+    "manager": null,
+    "is_archived": false
+  }
+},
+{
+  "model": "accounts.department",
+  "pk": 4,
+  "fields": {
+    "name": "1с",
+    "manager": null,
+    "is_archived": false
+  }
+},
+{
+  "model": "accounts.department",
+  "pk": 5,
+  "fields": {
+    "name": "Безопасность/ кибербезопасность",
+    "manager": null,
+    "is_archived": false
+  }
+},
+{
+  "model": "accounts.department",
+  "pk": 6,
+  "fields": {
+    "name": "Windows",
+    "manager": null,
+    "is_archived": true
+  }
+},
+{
+  "model": "accounts.employeeprofile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "admin"
+    ],
+    "avatar": "",
+    "middle_name": "",
+    "corporate_phone": "",
+    "position": "",
+    "department": null,
+    "hourly_rate": null,
+    "personal_phone": "",
+    "address": "",
+    "passport_series": "",
+    "passport_number": "",
+    "passport_issued_by": "",
+    "passport_issue_date": null,
+    "snils": "",
+    "inn": "",
+    "hourly_rate_reason": "",
+    "department_change_reason": ""
+  }
+},
+{
+  "model": "accounts.employeeprofile",
+  "pk": 14,
+  "fields": {
+    "user": [
+      "belikbelka2007"
+    ],
+    "avatar": "",
+    "middle_name": "Валентиновна",
+    "corporate_phone": "+7 (999) 009-09-23",
+    "position": "",
+    "department": 2,
+    "hourly_rate": "5508.00",
+    "personal_phone": "",
+    "address": "",
+    "passport_series": "",
+    "passport_number": "",
+    "passport_issued_by": "",
+    "passport_issue_date": null,
+    "snils": "",
+    "inn": "",
+    "hourly_rate_reason": "",
+    "department_change_reason": ""
+  }
+},
+{
+  "model": "accounts.employeeprofile",
+  "pk": 15,
+  "fields": {
+    "user": [
+      "vikusik20000"
+    ],
+    "avatar": "",
+    "middle_name": "Валентиновна",
+    "corporate_phone": "+7 (908) 765-43-93",
+    "position": "Дизайнер",
+    "department": 3,
+    "hourly_rate": "420.00",
+    "personal_phone": "+7 (989) 895-67-85",
+    "address": "Моховая улиица 9",
+    "passport_series": "3498",
+    "passport_number": "567878",
+    "passport_issued_by": "",
+    "passport_issue_date": "2022-01-08",
+    "snils": "345-678-909 87",
+    "inn": "",
+    "hourly_rate_reason": "стаж",
+    "department_change_reason": ""
+  }
+},
+{
+  "model": "accounts.employeeprofile",
+  "pk": 16,
+  "fields": {
+    "user": [
+      "maria_samoylova"
+    ],
+    "avatar": "",
+    "middle_name": "Николаевна",
+    "corporate_phone": "+7 (936) 605-12-78",
+    "position": "",
+    "department": 2,
+    "hourly_rate": "810.00",
+    "personal_phone": "",
+    "address": "",
+    "passport_series": "",
+    "passport_number": "",
+    "passport_issued_by": "",
+    "passport_issue_date": null,
+    "snils": "",
+    "inn": "",
+    "hourly_rate_reason": "стаж",
+    "department_change_reason": ""
+  }
+},
+{
+  "model": "accounts.passwordresetrequest",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "belikbelka2007"
+    ],
+    "email": "belikbelka2007@gmail.com",
+    "status": "processed",
+    "created_at": "2026-01-27T12:41:24.977Z",
+    "processed_at": "2026-01-27T12:42:56.917Z"
+  }
+},
+{
+  "model": "accounts.globalsettings",
+  "pk": 1,
+  "fields": {
+    "work_start": "07:00:00",
+    "work_end": "23:00:00",
+    "work_days": "daily",
+    "ot_threshold": 12,
+    "ot_coeff": "1.50",
+    "shift_templates": [
+      "07:00-23:00",
+      "15:00-23:00",
+      "10:00-23:00",
+      "10:00-18:00"
+    ],
+    "allow_custom_shifts": true,
+    "updated_at": "2026-02-01T10:28:50.640Z",
+    "updated_by": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "accounts.globalsettingschange",
+  "pk": 1,
+  "fields": {
+    "admin": [
+      "admin"
+    ],
+    "created_at": "2026-02-01T10:24:44.967Z",
+    "summary": "Обновлены глобальные настройки",
+    "details": "Изменения сохранены через панель администратора.",
+    "changes": [
+      "07:00-23:00"
+    ],
+    "payload": {
+      "ot_coeff": "1.5",
+      "work_end": "23:00",
+      "work_days": "daily",
+      "work_start": "07:00",
+      "ot_threshold": 12,
+      "shift_templates": [],
+      "allow_custom_shifts": false
+    }
+  }
+},
+{
+  "model": "accounts.globalsettingschange",
+  "pk": 2,
+  "fields": {
+    "admin": [
+      "admin"
+    ],
+    "created_at": "2026-02-01T10:25:43.008Z",
+    "summary": "Обновлены глобальные настройки",
+    "details": "Изменения сохранены через панель администратора.",
+    "changes": [
+      "Типы смен: 3"
+    ],
+    "payload": {
+      "ot_coeff": "1.5",
+      "work_end": "23:00",
+      "work_days": "daily",
+      "work_start": "07:00",
+      "ot_threshold": 12,
+      "shift_templates": [
+        "07:00-23:00",
+        "15:00-23:00",
+        "10:00-23:00"
+      ],
+      "allow_custom_shifts": false
+    }
+  }
+},
+{
+  "model": "accounts.globalsettingschange",
+  "pk": 3,
+  "fields": {
+    "admin": [
+      "admin"
+    ],
+    "created_at": "2026-02-01T10:28:46.146Z",
+    "summary": "Обновлены глобальные настройки",
+    "details": "Изменения сохранены через панель администратора.",
+    "changes": [
+      "Типы смен: 4"
+    ],
+    "payload": {
+      "ot_coeff": "1.5",
+      "work_end": "23:00",
+      "work_days": "daily",
+      "work_start": "07:00",
+      "ot_threshold": 12,
+      "shift_templates": [
+        "07:00-23:00",
+        "15:00-23:00",
+        "10:00-23:00",
+        "10:00-18:00"
+      ],
+      "allow_custom_shifts": false
+    }
+  }
+},
+{
+  "model": "accounts.globalsettingschange",
+  "pk": 4,
+  "fields": {
+    "admin": [
+      "admin"
+    ],
+    "created_at": "2026-02-01T10:28:50.642Z",
+    "summary": "Обновлены глобальные настройки",
+    "details": "Изменения сохранены через панель администратора.",
+    "changes": [
+      "Разрешены кастомные смены"
+    ],
+    "payload": {
+      "ot_coeff": "1.5",
+      "work_end": "23:00",
+      "work_days": "daily",
+      "work_start": "07:00",
+      "ot_threshold": 12,
+      "shift_templates": [
+        "07:00-23:00",
+        "15:00-23:00",
+        "10:00-23:00",
+        "10:00-18:00"
+      ],
+      "allow_custom_shifts": true
+    }
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-02-01T15:17:09.805Z",
+    "user": null,
+    "action": "Создан бэкап backup_20260201_151709.json",
+    "path": "",
+    "method": "",
+    "status_code": null,
+    "level": "info",
+    "ip_address": null,
+    "user_agent": "",
+    "duration_ms": null,
+    "meta": {
+      "size": 24838,
+      "source": "auto"
+    }
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-02-01T15:17:09.868Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 322,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-02-01T15:17:10.718Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 10,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-02-01T15:17:24.429Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 56,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-02-01T15:17:25.609Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 52,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-02-01T15:50:27.276Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 1815,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-02-01T15:50:29.012Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 9,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-02-01T15:50:54.047Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 52,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-02-01T15:50:56.862Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-logs-export",
+    "path": "/dashboard/admin/system/logs/export/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 36,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-02-01T15:51:46.180Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 80,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-02-01T15:51:46.638Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 13,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 12,
+  "fields": {
+    "created_at": "2026-02-01T15:52:18.966Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 49,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-02-01T15:52:19.424Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 12,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-02-01T15:52:20.772Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 37,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-02-01T15:52:23.704Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 37,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 16,
+  "fields": {
+    "created_at": "2026-02-01T15:52:25.736Z",
+    "user": [
+      "admin"
+    ],
+    "action": "Создан бэкап backup_20260201_155225.json",
+    "path": "",
+    "method": "",
+    "status_code": null,
+    "level": "info",
+    "ip_address": null,
+    "user_agent": "",
+    "duration_ms": null,
+    "meta": {
+      "size": 32697,
+      "source": "manual"
+    }
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 17,
+  "fields": {
+    "created_at": "2026-02-01T15:52:25.738Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-backup-create",
+    "path": "/dashboard/admin/system/backups/create/",
+    "method": "POST",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 221,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 18,
+  "fields": {
+    "created_at": "2026-02-01T15:52:31.452Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-backup-download",
+    "path": "/dashboard/admin/system/backups/2/download/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 36,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 19,
+  "fields": {
+    "created_at": "2026-02-01T15:53:28.517Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 35,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 20,
+  "fields": {
+    "created_at": "2026-02-01T15:53:29.446Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 21,
+  "fields": {
+    "created_at": "2026-02-01T15:53:30.936Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 22,
+  "fields": {
+    "created_at": "2026-02-01T15:53:32.037Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 42,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 23,
+  "fields": {
+    "created_at": "2026-02-01T15:53:34.929Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 24,
+  "fields": {
+    "created_at": "2026-02-01T15:55:43.862Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 89,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 25,
+  "fields": {
+    "created_at": "2026-02-01T15:55:44.688Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 10,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 26,
+  "fields": {
+    "created_at": "2026-02-01T15:57:51.787Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 128,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 27,
+  "fields": {
+    "created_at": "2026-02-01T15:57:51.971Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 8,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 28,
+  "fields": {
+    "created_at": "2026-02-01T15:57:55.538Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 55,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 29,
+  "fields": {
+    "created_at": "2026-02-01T15:57:56.152Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 9,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 30,
+  "fields": {
+    "created_at": "2026-02-01T15:58:03.670Z",
+    "user": [
+      "admin"
+    ],
+    "action": "Создан бэкап backup_20260201_185803.json",
+    "path": "",
+    "method": "",
+    "status_code": null,
+    "level": "info",
+    "ip_address": null,
+    "user_agent": "",
+    "duration_ms": null,
+    "meta": {
+      "size": 40217,
+      "source": "manual"
+    }
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 31,
+  "fields": {
+    "created_at": "2026-02-01T15:58:03.673Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-backup-create",
+    "path": "/dashboard/admin/system/backups/create/",
+    "method": "POST",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 411,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 32,
+  "fields": {
+    "created_at": "2026-02-01T15:58:05.835Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 112,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 33,
+  "fields": {
+    "created_at": "2026-02-01T15:58:09.520Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 68,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 34,
+  "fields": {
+    "created_at": "2026-02-01T15:58:12.332Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 53,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 35,
+  "fields": {
+    "created_at": "2026-02-01T15:58:15.187Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 64,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 36,
+  "fields": {
+    "created_at": "2026-02-01T15:58:17.612Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 52,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 37,
+  "fields": {
+    "created_at": "2026-02-01T15:58:18.052Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 11,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 38,
+  "fields": {
+    "created_at": "2026-02-01T15:59:33.607Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 99,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 39,
+  "fields": {
+    "created_at": "2026-02-01T15:59:34.084Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 15,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 40,
+  "fields": {
+    "created_at": "2026-02-01T15:59:34.720Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 53,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 41,
+  "fields": {
+    "created_at": "2026-02-01T15:59:37.926Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 63,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 42,
+  "fields": {
+    "created_at": "2026-02-01T15:59:40.006Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 53,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 43,
+  "fields": {
+    "created_at": "2026-02-01T15:59:40.550Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 9,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 44,
+  "fields": {
+    "created_at": "2026-02-01T15:59:47.297Z",
+    "user": [
+      "admin"
+    ],
+    "action": "Создан бэкап backup_20260201_185947.json",
+    "path": "",
+    "method": "",
+    "status_code": null,
+    "level": "info",
+    "ip_address": null,
+    "user_agent": "",
+    "duration_ms": null,
+    "meta": {
+      "size": 47587,
+      "source": "manual"
+    }
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 45,
+  "fields": {
+    "created_at": "2026-02-01T15:59:47.299Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-backup-create",
+    "path": "/dashboard/admin/system/backups/create/",
+    "method": "POST",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 272,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 46,
+  "fields": {
+    "created_at": "2026-02-01T16:01:04.550Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-logs-export",
+    "path": "/dashboard/admin/system/logs/export/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 48,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 47,
+  "fields": {
+    "created_at": "2026-02-01T16:01:56.064Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 81,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 48,
+  "fields": {
+    "created_at": "2026-02-01T16:01:56.127Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 67,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 49,
+  "fields": {
+    "created_at": "2026-02-01T16:01:56.311Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 20,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 50,
+  "fields": {
+    "created_at": "2026-02-01T16:01:57.133Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 54,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 51,
+  "fields": {
+    "created_at": "2026-02-01T16:02:00.251Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 62,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 52,
+  "fields": {
+    "created_at": "2026-02-01T16:02:05.127Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 62,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 53,
+  "fields": {
+    "created_at": "2026-02-01T16:02:05.556Z",
+    "user": [
+      "admin"
+    ],
+    "action": "GET /favicon.ico",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 404,
+    "level": "warning",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 10,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 54,
+  "fields": {
+    "created_at": "2026-02-01T16:03:10.253Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 60,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 55,
+  "fields": {
+    "created_at": "2026-02-01T16:03:11.586Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-departments",
+    "path": "/dashboard/admin/departments/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 57,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 56,
+  "fields": {
+    "created_at": "2026-02-01T16:03:12.403Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-settings",
+    "path": "/dashboard/admin/settings/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 40,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 57,
+  "fields": {
+    "created_at": "2026-02-01T16:03:55.007Z",
+    "user": [
+      "admin"
+    ],
+    "action": "swagger-ui",
+    "path": "/swagger/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 63,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 58,
+  "fields": {
+    "created_at": "2026-02-01T16:03:56.597Z",
+    "user": [
+      "admin"
+    ],
+    "action": "schema",
+    "path": "/api/schema/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 82,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 59,
+  "fields": {
+    "created_at": "2026-02-01T16:04:19.116Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-settings",
+    "path": "/dashboard/admin/settings/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 91,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 60,
+  "fields": {
+    "created_at": "2026-02-01T16:04:20.351Z",
+    "user": [
+      "admin"
+    ],
+    "action": "favicon",
+    "path": "/favicon.ico",
+    "method": "GET",
+    "status_code": 301,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 0,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 61,
+  "fields": {
+    "created_at": "2026-02-01T16:04:24.873Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 64,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 62,
+  "fields": {
+    "created_at": "2026-02-01T16:04:40.923Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 63,
+  "fields": {
+    "created_at": "2026-02-01T16:04:44.861Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 33,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 64,
+  "fields": {
+    "created_at": "2026-02-01T16:04:45.394Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 36,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 65,
+  "fields": {
+    "created_at": "2026-02-01T16:04:45.708Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 66,
+  "fields": {
+    "created_at": "2026-02-01T16:04:45.823Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 67,
+  "fields": {
+    "created_at": "2026-02-01T16:04:45.975Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 68,
+  "fields": {
+    "created_at": "2026-02-01T16:04:46.080Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 69,
+  "fields": {
+    "created_at": "2026-02-01T16:04:46.250Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 70,
+  "fields": {
+    "created_at": "2026-02-01T16:04:46.395Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 71,
+  "fields": {
+    "created_at": "2026-02-01T16:04:46.549Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 72,
+  "fields": {
+    "created_at": "2026-02-01T16:04:47.224Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 73,
+  "fields": {
+    "created_at": "2026-02-01T16:04:47.579Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 33,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 74,
+  "fields": {
+    "created_at": "2026-02-01T16:04:48.032Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 33,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 75,
+  "fields": {
+    "created_at": "2026-02-01T16:04:48.209Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 76,
+  "fields": {
+    "created_at": "2026-02-01T16:04:48.382Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 34,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 77,
+  "fields": {
+    "created_at": "2026-02-01T16:04:48.547Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 78,
+  "fields": {
+    "created_at": "2026-02-01T16:04:48.701Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 79,
+  "fields": {
+    "created_at": "2026-02-01T16:04:48.873Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 80,
+  "fields": {
+    "created_at": "2026-02-01T16:04:49.027Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 33,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 81,
+  "fields": {
+    "created_at": "2026-02-01T16:04:49.180Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system-monitoring",
+    "path": "/dashboard/admin/system/monitoring/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 32,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 82,
+  "fields": {
+    "created_at": "2026-02-01T16:05:01.688Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 55,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 83,
+  "fields": {
+    "created_at": "2026-02-01T16:05:05.324Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 56,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 84,
+  "fields": {
+    "created_at": "2026-02-01T16:05:15.162Z",
+    "user": null,
+    "action": "logout",
+    "path": "/logout/",
+    "method": "GET",
+    "status_code": 302,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 31,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 85,
+  "fields": {
+    "created_at": "2026-02-01T16:05:15.191Z",
+    "user": null,
+    "action": "login",
+    "path": "/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 1,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 86,
+  "fields": {
+    "created_at": "2026-02-03T09:44:19.597Z",
+    "user": null,
+    "action": "login",
+    "path": "/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 44,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 87,
+  "fields": {
+    "created_at": "2026-02-03T09:44:26.930Z",
+    "user": [
+      "admin"
+    ],
+    "action": "login",
+    "path": "/",
+    "method": "POST",
+    "status_code": 302,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 738,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 88,
+  "fields": {
+    "created_at": "2026-02-03T09:44:28.415Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-dashboard",
+    "path": "/dashboard/admin/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 1473,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 89,
+  "fields": {
+    "created_at": "2026-02-03T09:44:28.738Z",
+    "user": null,
+    "action": "Создан бэкап backup_20260203_124428.json",
+    "path": "",
+    "method": "",
+    "status_code": null,
+    "level": "info",
+    "ip_address": null,
+    "user_agent": "",
+    "duration_ms": null,
+    "meta": {
+      "size": 70665,
+      "source": "auto"
+    }
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 90,
+  "fields": {
+    "created_at": "2026-02-03T09:45:04.716Z",
+    "user": null,
+    "action": "logout",
+    "path": "/logout/",
+    "method": "GET",
+    "status_code": 302,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 43,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 91,
+  "fields": {
+    "created_at": "2026-02-03T09:45:04.746Z",
+    "user": null,
+    "action": "login",
+    "path": "/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 1,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 92,
+  "fields": {
+    "created_at": "2026-02-03T09:49:03.972Z",
+    "user": [
+      "admin"
+    ],
+    "action": "login",
+    "path": "/",
+    "method": "POST",
+    "status_code": 302,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 773,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 93,
+  "fields": {
+    "created_at": "2026-02-03T09:49:04.023Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-dashboard",
+    "path": "/dashboard/admin/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 42,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 94,
+  "fields": {
+    "created_at": "2026-02-03T09:49:28.788Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-user-detail",
+    "path": "/dashboard/admin/users/15/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 58,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 95,
+  "fields": {
+    "created_at": "2026-02-03T09:50:24.287Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 45,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 96,
+  "fields": {
+    "created_at": "2026-02-03T09:50:53.364Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-departments",
+    "path": "/dashboard/admin/departments/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 1062,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 97,
+  "fields": {
+    "created_at": "2026-02-03T09:51:19.359Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-department-detail",
+    "path": "/dashboard/admin/departments/2/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 63,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 98,
+  "fields": {
+    "created_at": "2026-02-03T09:51:33.058Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-settings",
+    "path": "/dashboard/admin/settings/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 1070,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 99,
+  "fields": {
+    "created_at": "2026-02-03T09:52:03.377Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-settings-history",
+    "path": "/dashboard/admin/settings/history/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 33,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 100,
+  "fields": {
+    "created_at": "2026-02-03T09:52:13.925Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 1049,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 101,
+  "fields": {
+    "created_at": "2026-02-03T09:52:42.259Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-settings",
+    "path": "/dashboard/admin/settings/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 38,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 102,
+  "fields": {
+    "created_at": "2026-02-03T09:52:48.103Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-departments",
+    "path": "/dashboard/admin/departments/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 60,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 103,
+  "fields": {
+    "created_at": "2026-02-03T09:53:38.421Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 54,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 104,
+  "fields": {
+    "created_at": "2026-02-03T09:53:42.553Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-departments",
+    "path": "/dashboard/admin/departments/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 52,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 105,
+  "fields": {
+    "created_at": "2026-02-03T09:54:09.105Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-department-detail",
+    "path": "/dashboard/admin/departments/2/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 47,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 106,
+  "fields": {
+    "created_at": "2026-02-03T09:57:43.695Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 57,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 107,
+  "fields": {
+    "created_at": "2026-02-03T09:57:48.460Z",
+    "user": [
+      "admin"
+    ],
+    "action": "api-employees-deactivate",
+    "path": "/api/employees/deactivate/",
+    "method": "POST",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 27,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 108,
+  "fields": {
+    "created_at": "2026-02-03T09:57:50.086Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-departments",
+    "path": "/dashboard/admin/departments/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 49,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 109,
+  "fields": {
+    "created_at": "2026-02-03T09:57:51.996Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-department-detail",
+    "path": "/dashboard/admin/departments/2/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 50,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 110,
+  "fields": {
+    "created_at": "2026-02-03T09:57:56.546Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 43,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 111,
+  "fields": {
+    "created_at": "2026-02-03T09:58:01.008Z",
+    "user": [
+      "admin"
+    ],
+    "action": "api-employees-activate",
+    "path": "/api/employees/activate/",
+    "method": "POST",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 28,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 112,
+  "fields": {
+    "created_at": "2026-02-03T09:58:02.791Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-departments",
+    "path": "/dashboard/admin/departments/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 65,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 113,
+  "fields": {
+    "created_at": "2026-02-03T09:59:15.418Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-settings",
+    "path": "/dashboard/admin/settings/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 45,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 114,
+  "fields": {
+    "created_at": "2026-02-03T09:59:18.328Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-system",
+    "path": "/dashboard/admin/system/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 53,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 115,
+  "fields": {
+    "created_at": "2026-02-03T09:59:22.694Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 45,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 116,
+  "fields": {
+    "created_at": "2026-02-03T09:59:28.140Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-departments",
+    "path": "/dashboard/admin/departments/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 53,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 117,
+  "fields": {
+    "created_at": "2026-02-03T09:59:30.002Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-department-detail",
+    "path": "/dashboard/admin/departments/2/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 45,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 118,
+  "fields": {
+    "created_at": "2026-02-03T09:59:44.717Z",
+    "user": [
+      "admin"
+    ],
+    "action": "admin-users",
+    "path": "/dashboard/admin/users/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 45,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systemlogentry",
+  "pk": 119,
+  "fields": {
+    "created_at": "2026-02-04T09:35:30.384Z",
+    "user": [
+      "admin"
+    ],
+    "action": "login",
+    "path": "/",
+    "method": "GET",
+    "status_code": 200,
+    "level": "info",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "duration_ms": 76,
+    "meta": {}
+  }
+},
+{
+  "model": "accounts.systembackup",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-02-01T15:17:09.801Z",
+    "created_by": null,
+    "file_name": "backup_20260201_151709.json",
+    "file_path": "/Users/veseliy.hlebushek/Desktop/shift-schedule/backups/backup_20260201_151709.json",
+    "file_size": 24838,
+    "status": "ready",
+    "source": "auto",
+    "restored_at": null,
+    "restored_by": null,
+    "notes": ""
+  }
+},
+{
+  "model": "accounts.systembackup",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-02-01T15:52:25.734Z",
+    "created_by": [
+      "admin"
+    ],
+    "file_name": "backup_20260201_155225.json",
+    "file_path": "/Users/veseliy.hlebushek/Desktop/shift-schedule/backups/backup_20260201_155225.json",
+    "file_size": 32697,
+    "status": "ready",
+    "source": "manual",
+    "restored_at": null,
+    "restored_by": null,
+    "notes": ""
+  }
+},
+{
+  "model": "accounts.systembackup",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-02-01T15:58:03.666Z",
+    "created_by": [
+      "admin"
+    ],
+    "file_name": "backup_20260201_185803.json",
+    "file_path": "/Users/veseliy.hlebushek/Desktop/shift-schedule/backups/backup_20260201_185803.json",
+    "file_size": 40217,
+    "status": "ready",
+    "source": "manual",
+    "restored_at": null,
+    "restored_by": null,
+    "notes": ""
+  }
+},
+{
+  "model": "accounts.systembackup",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-02-01T15:59:47.295Z",
+    "created_by": [
+      "admin"
+    ],
+    "file_name": "backup_20260201_185947.json",
+    "file_path": "/Users/veseliy.hlebushek/Desktop/shift-schedule/backups/backup_20260201_185947.json",
+    "file_size": 47587,
+    "status": "ready",
+    "source": "manual",
+    "restored_at": null,
+    "restored_by": null,
+    "notes": ""
+  }
+},
+{
+  "model": "accounts.systembackup",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-02-03T09:44:28.735Z",
+    "created_by": null,
+    "file_name": "backup_20260203_124428.json",
+    "file_path": "/Users/veseliy.hlebushek/Desktop/shift-schedule/backups/backup_20260203_124428.json",
+    "file_size": 70665,
+    "status": "ready",
+    "source": "auto",
+    "restored_at": null,
+    "restored_by": null,
+    "notes": ""
+  }
+},
+{
+  "model": "authtoken.token",
+  "pk": "ed1fa0590e5c75fee3667e04fec20d913d142912",
+  "fields": {
+    "user": [
+      "admin"
+    ],
+    "created": "2026-01-20T10:22:58.670Z"
+  }
+}
+]

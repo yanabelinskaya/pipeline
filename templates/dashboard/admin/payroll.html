@@ -1,0 +1,86 @@
+{% extends 'dashboard/admin.html' %}
+
+{% block content %}
+  <div class="card dashboard-hero fade-up">
+    <div class="hero-header">
+      <div>
+        <h1>Отчеты по времени</h1>
+        <p class="subtle">Сводка доступности, загрузки и переработок по отделам.</p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-inline" type="button">Сформировать отчеты</button>
+        <button class="btn btn-ghost btn-inline" type="button">Утвердить все</button>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-chip">3 отдела готовы к выгрузке</div>
+      <div class="meta-chip">2 отдела на проверке</div>
+      <div class="meta-chip">Экспорт для бухгалтерии</div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <a class="tab-pill{% if active_tab == 'users' %} active{% endif %}" href="{% url 'admin-users' %}">Пользователи</a>
+    <a class="tab-pill{% if active_tab == 'departments' %} active{% endif %}" href="{% url 'admin-departments' %}">Отделы</a>
+    <a class="tab-pill{% if active_tab == 'settings' %} active{% endif %}" href="{% url 'admin-settings' %}">Глобальные настройки</a>
+    <a class="tab-pill{% if active_tab == 'reports' %} active{% endif %}" href="{% url 'admin-reports' %}">Отчеты компании</a>
+    <a class="tab-pill{% if active_tab == 'payroll' %} active{% endif %}" href="{% url 'admin-payroll' %}">Отчеты</a>
+    <a class="tab-pill{% if active_tab == 'system' %} active{% endif %}" href="{% url 'admin-system' %}">Система</a>
+  </div>
+
+  <section class="card section-block">
+    <div class="section-header">
+      <div>
+        <h2>Отчеты по отделам</h2>
+        <p class="subtle">Статусы готовности и экспорт сводок.</p>
+      </div>
+      <div class="section-actions">
+        <button class="btn btn-primary btn-inline" type="button">Экспорт по всем отделам</button>
+        <button class="btn btn-ghost btn-inline" type="button">Скачать шаблон</button>
+      </div>
+    </div>
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Отдел</th>
+            <th>Часы</th>
+            <th>Сотрудники</th>
+            <th>Статус</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Разработка</td>
+            <td>4 120 ч</td>
+            <td>48 сотрудников</td>
+            <td><span class="status-pill success">Готово</span></td>
+            <td><button class="btn btn-ghost btn-inline btn-sm" type="button">Экспорт</button></td>
+          </tr>
+          <tr>
+            <td>Саппорт</td>
+            <td>2 240 ч</td>
+            <td>32 сотрудника</td>
+            <td><span class="status-pill warning">На проверке</span></td>
+            <td><button class="btn btn-ghost btn-inline btn-sm" type="button">Проверить</button></td>
+          </tr>
+          <tr>
+            <td>Инфраструктура</td>
+            <td>1 620 ч</td>
+            <td>21 сотрудник</td>
+            <td><span class="status-pill">Черновик</span></td>
+            <td><button class="btn btn-ghost btn-inline btn-sm" type="button">Открыть</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="inline-panel">
+      <div>
+        <div class="mini-title">Норма часов</div>
+        <p class="subtle">Массовая корректировка нормы часов на следующий период.</p>
+      </div>
+      <button class="btn btn-primary btn-inline" type="button">Запланировать изменение</button>
+    </div>
+  </section>
+{% endblock %}
