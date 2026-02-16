@@ -1,9 +1,41 @@
 stages:
-  - test
+  - build
+  - lint
+  - functional
 
-test-job:
-  stage: test
+default:
+  before_script:
+    - python3 -V
+    - python3 -m venv .venv
+    - . .venv/bin/activate
+    - python -m pip install -U pip setuptools wheel
+    - python -m pip install -r requirements.txt
+
+variables:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  DJANGO_SETTINGS_MODULE: "schedule_api.settings"
+  DJANGO_SECRET_KEY: "ci-secret-key"
+  DJANGO_DEBUG: "False"
+  DB_ENGINE: "django.db.backends.sqlite3"
+  DB_NAME: "db.sqlite3"
+
+build-check:
+  stage: build
   script:
-    - echo "Начало"
-    - echo "Второй этап"
-    - echo "Конец"
+    - python manage.py check
+
+lint:
+  stage: lint
+  script:
+    - python -m pip install flake8==7.0.0
+    - python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude .venv
+
+migrations-check:
+  stage: functional
+  script:
+    - python manage.py makemigrations --check --dry-run
+
+tests:
+  stage: functional
+  script:
+    - python manage.py test
