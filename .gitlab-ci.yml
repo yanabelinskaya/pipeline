@@ -27,8 +27,8 @@ build-check:
 lint:
   stage: lint
   script:
-    - python -m pip install flake8==7.0.0
-    - python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude .venv
+    - python -m pip install flake8
+    - python -m flake8 . --count --show-source --statistics --exclude .venv
 
 migrations-check:
   stage: functional
